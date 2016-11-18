@@ -1,5 +1,6 @@
 package com.epicodus.airdd;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,14 +29,15 @@ public class MainActivity extends AppCompatActivity {
         mFindGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Find Game!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, FindGameActivity.class);
+                startActivity(intent);
             }
         });
 
         mHostGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Host Game!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
             }
         });
 

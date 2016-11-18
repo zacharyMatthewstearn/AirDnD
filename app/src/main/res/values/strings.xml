@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AirD&amp;D</string>
+    <string name="title">Air</string>
+    <string name="dnd_logo">D&amp;D logo</string>
+    <string name="find_a_game">Find a Game</string>
+    <string name="host_a_game">Host a Game</string>
+</resources>

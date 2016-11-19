@@ -8,7 +8,16 @@
     >
 
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dragonBackgroundImageView"
+        android:scaleType="fitCenter"
+        android:backgroundTint="#80ffffff"
+        android:backgroundTintMode="src_atop"
+        android:padding="20dp"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/dragon" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,12 +25,14 @@
         android:text="@string/title"
         android:id="@+id/textView_title"
         android:textColor="@color/colorPrimary"
-        android:textSize="80sp"
+        android:textSize="100sp"
         android:textStyle="bold"
-        android:layout_above="@+id/button_findGame"
+        android:paddingBottom="19sp"
+        android:paddingTop="25sp"
+        android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/button_findGame"
         android:layout_alignStart="@+id/button_findGame"
-        android:layout_marginBottom="63dp" />
+        android:paddingLeft="60dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,20 +45,18 @@
         android:layout_toRightOf="@+id/textView_title"
         android:layout_toEndOf="@+id/textView_title"
         android:layout_marginRight="60dp"
-        android:layout_marginEnd="60dp"
-        android:paddingBottom="3sp" />
+        android:layout_marginEnd="60dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/find_a_game"
         android:id="@+id/button_findGame"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryLight"
         android:textColor="@color/colorIcons"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="60sp"
-        android:layout_marginRight="60sp" />
+        android:layout_above="@+id/button_hostGame"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -55,11 +64,9 @@
         android:text="@string/host_a_game"
         android:id="@+id/button_hostGame"
         android:textColor="@color/colorIcons"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="80dp"
-        android:layout_below="@+id/button_findGame"
-        android:layout_alignRight="@+id/button_findGame"
-        android:layout_alignEnd="@+id/button_findGame"
-        android:layout_alignLeft="@+id/button_findGame"
-        android:layout_alignStart="@+id/button_findGame" />
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

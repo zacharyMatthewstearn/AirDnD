@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Typeface modestoBoldFont = Typeface.createFromAsset(getAssets(), "fonts/modesto-bold.ttf");
+        Typeface modestoBoldFont = Typeface.createFromAsset(getAssets(), "fonts/nodesto-caps-condensed-bold.otf");
         mTitleTextView.setTypeface(modestoBoldFont);
 
         mFindGameButton.setOnClickListener(new View.OnClickListener() {

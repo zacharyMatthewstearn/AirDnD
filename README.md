@@ -10,13 +10,15 @@ Android app for finding/hosting D&amp;D games
 
 ## Requirements:
 
-[TODO: COMPLETE THIS]
+Android Studio 2.1
+Android Device/Emulator
 
 ## Setup
 
-1. Clone this repository to your desktop `$ git clone https://github.com/zacharyMatthewstearn/AirDnD`
+1. Clone this repository to your desired location `$ git clone https://github.com/zacharyMatthewstearn/AirDnD`
+2. Open cloned repository in Android Studio
+4. Run application (either on device via USB, or through Emulation)
 
-[TODO: COMPLETE THIS]
 
 ## Known Bugs
 

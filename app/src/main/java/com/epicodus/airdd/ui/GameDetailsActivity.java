@@ -1,4 +1,4 @@
-package com.epicodus.airdd;
+package com.epicodus.airdd.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

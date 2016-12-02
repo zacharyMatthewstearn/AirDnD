@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.epicodus.airdd.models.Game;
-import com.epicodus.airdd.ui.R;
+import com.epicodus.airdd.R;
 
 import java.util.List;
 

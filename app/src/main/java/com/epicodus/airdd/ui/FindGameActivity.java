@@ -7,6 +7,7 @@ import android.widget.ToggleButton;
 
 import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
+import com.epicodus.airdd.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

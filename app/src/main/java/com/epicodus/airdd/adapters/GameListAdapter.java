@@ -7,57 +7,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.R;
+import com.epicodus.airdd.models.Game;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.titleTextView) TextView mTitleTextView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            mTitleTextView = (TextView) itemView.findViewById(R.id.textView_title);
-        }
-    }
-
-    private List<Game> mGames;
+public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
+    private static final String TAG = GameListAdapter.class.getSimpleName();
     private Context mContext;
+    private ArrayList<Game> mGames = new ArrayList<>();
 
-    public GameListAdapter(Context context, List<Game> games) {
-        mGames = games;
+    public GameListAdapter(Context context, ArrayList<Game> games) {
         mContext = context;
-    }
-
-    private Context getContext() {
-        return mContext;
+        mGames = games;
     }
 
     @Override
-    public GameListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View contactView = inflater.inflate(R.layout.activity_find_game, parent, false);
-
-        ViewHolder viewHolder = new ViewHolder(contactView);
+    public GameListAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_list_item, parent, false);
+        GameViewHolder viewHolder = new GameViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(GameListAdapter.ViewHolder viewHolder, int position) {
-        Game game = mGames.get(position);
-
-        TextView textView = viewHolder.mTitleTextView;
-        textView.setText(game.getTitle());
+    public void onBindViewHolder(GameListAdapter.GameViewHolder holder, int position) {
+        holder.bindGame(mGames.get(position));
     }
 
     @Override
     public int getItemCount() {
         return mGames.size();
+    }
+
+    public class GameViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.TextViewGameTitle) TextView mTextViewGameTitle;
+
+        public GameViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bindGame(Game game) {
+            mTextViewGameTitle.setText(game.getTitle());
+        }
     }
 }

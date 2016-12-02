@@ -9,7 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.epicodus.airdd.R;
+import com.epicodus.airdd.models.Game;
+import com.epicodus.airdd.models.User;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,7 +45,9 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(HostGameActivity.this, MainActivity.class);
+        Intent intent;
+        User temp = new User("Guest", "password");
+        Game newGame;
         switch(view.getId()) {
             case R.id.toggleButton_DM:
                 mToggleButtonPlay.setChecked(!mToggleButtonPlay.isChecked());
@@ -49,11 +56,24 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                 mToggleButtonDM.setChecked(!mToggleButtonDM.isChecked());
                 break;
             case R.id.button_postGame:
-                Toast.makeText(this, "Your game has been posted!", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+                if(mEditTextTitle.getText().toString().length() > 0 &&
+                   mEditTextDate.getText().toString().length() > 0 &&
+                   mEditTextDescription.getText().toString().length() > 0) {
+
+                    newGame = new Game(temp, mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), temp.getAddress(), mEditTextDate.getText().toString());
+
+                    intent = new Intent(HostGameActivity.this, FindGameActivity.class);
+                    intent.putExtra("newGame", Parcels.wrap(newGame));
+                    startActivity(intent);
+
+                    Toast.makeText(this, "Your game has been posted!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(HostGameActivity.this, "All fields are required to post a game.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.button_cancel:
-//                finish();
+                intent = new Intent(HostGameActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
             default:

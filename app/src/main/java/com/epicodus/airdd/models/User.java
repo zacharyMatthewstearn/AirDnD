@@ -1,17 +1,22 @@
 package com.epicodus.airdd.models;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class User {
 
     // MEMBER VARIABLES
-    private String mUsername = "";
-    private String mPassword = "";
-    private float mRating = 0f;
+    String mUsername = "";
+    String mPassword = "";
+    String mAddress = "";
 
-    // CONSTRUCTOR
+    // CONSTRUCTORS
     public User(String username, String password) {
         mUsername = username;
         mPassword = password;
     }
+
+    public User() {     }
 
     // GETTERS
     public String getUsername() {
@@ -20,8 +25,8 @@ public class User {
     public String getPassword() {
         return mPassword;
     }
-    public float getRating() {
-        return mRating;
+    public String getAddress() {
+        return mAddress;
     }
 
     // SETTERS
@@ -31,7 +36,7 @@ public class User {
     public void setPassword(String password) {
         mPassword = password;
     }
-    public void setRating(float rating) {
-        mRating = rating;
+    public void setAddress(String address) {
+        mAddress = address;
     }
 }

@@ -1,22 +1,24 @@
 package com.epicodus.airdd.models;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+@Parcel
 public class Game {
 
     // MEMBER VARIABLES
-    private User mHost = null;
-    private User mDM = null;
-    private List<User> mPlayers = new ArrayList<>();
-    private String mTitle = "";
-    private String mDescription = "";
-    private String mLocation = "";
-    private Date mDateTime = null;
+    User mHost = null;
+    User mDM = null;
+    List<User> mPlayers = new ArrayList<>();
+    String mTitle = "";
+    String mDescription = "";
+    String mLocation = "";
+    String mDateTime = "";
 
-    // CONSTRUCTOR
-    public Game(User host, boolean ownerDM, String title, String description, String location, Date dateTime) {
+    // CONSTRUCTORS
+    public Game(User host, boolean ownerDM, String title, String description, String location, String dateTime) {
         mHost = host;
         if(ownerDM)
             mDM = host;
@@ -27,9 +29,7 @@ public class Game {
         mLocation = location;
         mDateTime = dateTime;
     }
-    public Game(String title) {
-        mTitle = title;
-    }
+    public Game() {    }
 
     // GETTERS
     public User getHost() {
@@ -50,7 +50,7 @@ public class Game {
     public String getLocation() {
         return mLocation;
     }
-    public Date getDateTime() {
+    public String getDateTime() {
         return mDateTime;
     }
 
@@ -73,7 +73,7 @@ public class Game {
     public void setLocation(String location) {
         mLocation = location;
     }
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(String dateTime) {
         mDateTime = dateTime;
     }
 }

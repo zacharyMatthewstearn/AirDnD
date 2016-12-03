@@ -12,6 +12,8 @@ import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.ui.GameDetailsActivity;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -36,7 +38,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
                 Context context = v.getContext();
                 String thisGameName = ((TextView)((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(0)).getText().toString(); // OH MY GOD THERE MUST BE A BETTER WAY THAN THIS...
                 Intent intent = new Intent(context, GameDetailsActivity.class);
-                intent.putExtra("gameName", thisGameName);
+                intent.putExtra("thisGame", Parcels.wrap(Game.findByTitle(mGames, thisGameName)));
                 context.startActivity(intent);
             }
         });

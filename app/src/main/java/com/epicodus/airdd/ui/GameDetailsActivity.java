@@ -1,16 +1,32 @@
 package com.epicodus.airdd.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.epicodus.airdd.R;
+import com.epicodus.airdd.models.Game;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GameDetailsActivity extends AppCompatActivity {
-    @Bind(R.id.titleTextView) TextView mOutputTextView;
+public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String TAG = GameDetailsActivity.class.getSimpleName();
+
+    @Bind(R.id.titleTextView) TextView mTitleTextView;
+    @Bind(R.id.hostTextView) TextView mHostTextView;
+    @Bind(R.id.descriptionTextView) TextView mDescriptionTextView;
+    @Bind(R.id.timeTextView) TextView mTimeTextView;
+    @Bind(R.id.locationTextView) TextView mLocationTextView;
+
+    public Game mGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +34,36 @@ public class GameDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_details);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        String output = intent.getStringExtra("gameName");
+        mGame = Parcels.unwrap(getIntent().getParcelableExtra("thisGame"));
+        if(mGame != null) {
+            mTitleTextView.setText(mGame.getTitle());
+            mDescriptionTextView.setText(mGame.getDescription());
+            mTimeTextView.setText(mGame.getDateTime());
+            mLocationTextView.setText(mGame.getLocation());
+            if(mGame.getHost() != null) {
+                mHostTextView.setText(mGame.getHost().getUsername());
+            }
+            else {
+                mHostTextView.setText("ERROR: no host for this game");
+            }
+        }
+        else {
+            Toast.makeText(this, "ERROR: failed to retrieve data", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        mOutputTextView.setText(output);
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.locationTextView:
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("geo:" + "45.5207050"
+                                + "," + "-122.6773970"
+                                + "?q=(" + mGame.getTitle() + ")"));
+                startActivity(mapIntent);
+                break;
+            default:
+                Log.d(TAG, "GameDetailsActivity onClick received bad argument for 'view'");
+        }
     }
 }

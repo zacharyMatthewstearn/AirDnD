@@ -8,6 +8,9 @@ import java.util.List;
 @Parcel
 public class Game {
 
+    // STATIC VARIABLES
+    static ArrayList<Game> ALL_GAMES;
+
     // MEMBER VARIABLES
     User mHost = null;
     User mDM = null;
@@ -30,6 +33,16 @@ public class Game {
         mDateTime = dateTime;
     }
     public Game() {    }
+
+    // STATIC METHODS
+    public static Game findByTitle(ArrayList<Game> games, String title) {
+        for(int i = 0; i < games.size(); i++) {
+            if(games.get(i).getTitle().equals(title)) {
+                return games.get(i);
+            }
+        }
+        return null;
+    }
 
     // GETTERS
     public User getHost() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.epicodus.airdd">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +10,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,20 +18,25 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".FindGameActivity">
+        <activity android:name=".ui.FindGameActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.airdd.MainActivity">
-            </meta-data>
+                android:value=".ui.MainActivity"
+            ></meta-data>
         </activity>
 
-        <activity
-            android:name=".GameDetailsActivity">
+        <activity android:name=".ui.GameDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.airdd.FindGameActivity">
-            </meta-data>
+                android:value=".ui.FindGameActivity"
+            ></meta-data>
+        </activity>
+
+        <activity android:name=".ui.HostGameActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity"
+            ></meta-data>
         </activity>
 
     </application>

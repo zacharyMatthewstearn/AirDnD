@@ -34,6 +34,8 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_game_details);
         ButterKnife.bind(this);
 
+        mLocationTextView.setOnClickListener(this);
+
         mGame = Parcels.unwrap(getIntent().getParcelableExtra("thisGame"));
         if(mGame != null) {
             mTitleTextView.setText(mGame.getTitle());
@@ -59,7 +61,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("geo:" + "45.5207050"
                                 + "," + "-122.6773970"
-                                + "?q=(" + mGame.getTitle() + ")"));
+                                + "?q=(" + "Epicodus" + ")"));
                 startActivity(mapIntent);
                 break;
             default:

@@ -1,8 +1,8 @@
 # AirDnD
 
-#### By [**Zachary Matthewstearn**](https://github.com/zacharyMatthewstearn), 11/18/2016
+#### D&amp;D Groupfinder Android App for Epicodus, 11/18/2016
 
-#### By Zachary Matthewstearn
+#### By [**Zachary Matthewstearn**](https://github.com/zacharyMatthewstearn)
 
 ## Description
 

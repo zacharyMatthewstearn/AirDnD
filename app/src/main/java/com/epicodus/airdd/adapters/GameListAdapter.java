@@ -1,6 +1,7 @@
 package com.epicodus.airdd.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
+import com.epicodus.airdd.ui.GameDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     @Override
     public GameListAdapter.GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_list_item, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                String thisGameName = ((TextView)((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(0)).getText().toString(); // OH MY GOD THERE MUST BE A BETTER WAY THAN THIS...
+                Intent intent = new Intent(context, GameDetailsActivity.class);
+                intent.putExtra("gameName", thisGameName);
+                context.startActivity(intent);
+            }
+        });
         GameViewHolder viewHolder = new GameViewHolder(view);
         return viewHolder;
     }

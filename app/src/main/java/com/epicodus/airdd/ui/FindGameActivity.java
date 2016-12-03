@@ -27,10 +27,7 @@ public class FindGameActivity extends AppCompatActivity {
 
     private GameListAdapter mAdapter;
 
-//    List<String> mGames = new ArrayList<>(Arrays.asList("game1","game2","game3","game4","game5","game6","game7","game8","game9","game10","game11","game12","game13","game14","game15","game16","game17","game18", "game19","game20"));
-
     public ArrayList<Game> mGames = new ArrayList<>();
-//    public ArrayList<Game> mGames = new ArrayList<>(Arrays.asList(new Game("game1")));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +39,6 @@ public class FindGameActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
         getGames();
-
-//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                String gameName = parent.getItemAtPosition(position).toString();
-//                Intent intent = new Intent(FindGameActivity.this, GameDetailsActivity.class);
-//                intent.putExtra("gameName", gameName);
-//                startActivity(intent);
-//
-////                Toast.makeText(FindGameActivity.this, "Clicked: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private void getGames() {

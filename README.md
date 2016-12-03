@@ -1,12 +1,12 @@
 # AirDnD
 
-#### By [**Zachary Matthewstearn**](https://github.com/zacharyMatthewstearn) , 11/18/2016
+#### By [**Zachary Matthewstearn**](https://github.com/zacharyMatthewstearn), 11/18/2016
 
 #### By Zachary Matthewstearn
 
 ## Description
 
-Android app for finding/hosting D&amp;D games
+"Real-life Groupfinder" App for Android, specifically for finding or hosting in-person D&amp;D games. Not affiliated with Airbnb.
 
 ## Requirements:
 

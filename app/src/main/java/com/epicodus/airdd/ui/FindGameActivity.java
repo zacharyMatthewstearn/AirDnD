@@ -4,19 +4,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ToggleButton;
 
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.models.User;
+import com.epicodus.airdd.services.MeetupService;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class FindGameActivity extends AppCompatActivity {
     public static final String TAG = FindGameActivity.class.getSimpleName();
@@ -51,6 +57,34 @@ public class FindGameActivity extends AppCompatActivity {
         mGames.add(tempGame1);
         mGames.add(tempGame2);
         mGames.add(tempGame3);
+
+
+
+
+
+        final MeetupService meetupService = new MeetupService();
+        meetupService.findGames("97215", new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String jsonData = response.body().string();
+                    Log.v(TAG, jsonData);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+
 
         Game newGame = Parcels.unwrap(getIntent().getParcelableExtra("newGame"));
         if(newGame != null) {

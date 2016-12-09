@@ -26,8 +26,9 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
     @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
     @Bind(R.id.editText_title) EditText mEditTextTitle;
-    @Bind(R.id.editText_description) EditText mEditTextDescription;
     @Bind(R.id.editText_date) EditText mEditTextDate;
+    @Bind(R.id.editText_address) EditText mEditTextAddress;
+    @Bind(R.id.editText_description) EditText mEditTextDescription;
     @Bind(R.id.button_postGame) Button mButtonPostGame;
     @Bind(R.id.button_cancel) Button mButtonCancel;
 
@@ -60,7 +61,7 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                    mEditTextDate.getText().toString().length() > 0 &&
                    mEditTextDescription.getText().toString().length() > 0) {
 
-                    newGame = new Game(temp, mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), temp.getAddress(), mEditTextDate.getText().toString());
+                    newGame = new Game(temp, mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString());
 
                     intent = new Intent(HostGameActivity.this, FindGameActivity.class);
                     intent.putExtra("newGame", Parcels.wrap(newGame));

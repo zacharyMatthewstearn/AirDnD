@@ -8,7 +8,7 @@ public class User {
     // MEMBER VARIABLES
     String mUsername = "";
     String mPassword = "";
-    String mAddress = "";
+//    String mAddress = "";
 
     // CONSTRUCTORS
     public User(String username, String password) {
@@ -25,9 +25,7 @@ public class User {
     public String getPassword() {
         return mPassword;
     }
-    public String getAddress() {
-        return mAddress;
-    }
+//    public String getAddress() {return mAddress; }
 
     // SETTERS
     public void setUsername(String username) {
@@ -36,7 +34,5 @@ public class User {
     public void setPassword(String password) {
         mPassword = password;
     }
-    public void setAddress(String address) {
-        mAddress = address;
-    }
+//    public void setAddress(String address) { mAddress = address; }
 }

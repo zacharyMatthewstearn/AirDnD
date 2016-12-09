@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "463200406455",
+    "firebase_url": "https://airdnd-151219.firebaseio.com",
+    "project_id": "airdnd-151219",
+    "storage_bucket": "airdnd-151219.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463200406455:android:1bdf81cda1af4cfc",
+        "android_client_info": {
+          "package_name": "com.epicodus.airdd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463200406455-s56tcs3ficiv67arklp460f8tb5fbh3g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epicodus.airdd",
+            "certificate_hash": "C39CEA6A31B3F707FB69AB9616E26A51AD2D43F7"
+          }
+        },
+        {
+          "client_id": "463200406455-2p5vlihn71hham20nagetjsd1kn2doqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIzxO042TuNZUU4mI00RXT9LXDLyaWF10"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463200406455-2p5vlihn71hham20nagetjsd1kn2doqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

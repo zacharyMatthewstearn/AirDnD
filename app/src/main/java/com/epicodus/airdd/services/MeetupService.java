@@ -20,21 +20,17 @@ import okhttp3.Response;
 
 public class MeetupService {
 
-    public static void findGames(String location, Callback callback) {
+    public static void findGames(Callback callback) {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.API_BASE_URL).newBuilder();
-        urlBuilder.addQueryParameter(Constants.API_KEY_QUERY_PARAMETER, "2b40a421d52474851557b20da7076");
-//        urlBuilder.addQueryParameter(Constants.API_ZIP_QUERY_PARAMETER, "97215");
+        urlBuilder.addQueryParameter(Constants.API_KEY_QUERY_PARAMETER, Constants.API_KEY);
         urlBuilder.addQueryParameter(Constants.API_GROUP_URLNAME_QUERY_PARAMETER, "dndaloregon");
-        urlBuilder.addQueryParameter("sign", "true");
-        urlBuilder.addQueryParameter("page", "20");
+        urlBuilder.addQueryParameter(Constants.API_SIGN_QUERY_PARAMETER, "true");
+        urlBuilder.addQueryParameter(Constants.API_PAGE_QUERY_PARAMETER, "20");
         String url = urlBuilder.build().toString();
-
-//        Log.d("MeetupService", url);
-//        String url = "https://api.meetup.com/dndaloregon/events?key=2b40a421d52474851557b20da7076";
 
         Request request= new Request.Builder()
                 .url(url)
@@ -118,14 +114,6 @@ public class MeetupService {
 
                     User host = new User(hostUsername, hostPassword);
                     String location = address_1 + " " + city + ", " + state + " " + zip;
-
-//                    Log.d("MeetupService", address_1);
-//                    Log.d("MeetupService", city);
-//                    Log.d("MeetupService", state);
-//                    Log.d("MeetupService", zip);
-//                    Log.d("MeetupService", title);
-//                    Log.d("MeetupService", description);
-//                    Log.d("MeetupService", dateTime+"");
 
                     Game game = new Game(host, ownerDM, title, description, location, dateTime+"");
                     games.add(game);

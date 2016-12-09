@@ -41,39 +41,13 @@ public class FindGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_game);
         ButterKnife.bind(this);
 
-//        GameListAdapter adapter = new GameListAdapter(this, mGames);
-//        mRecyclerView.setAdapter(adapter);
-
         getGames();
-
-//        Intent intent = getIntent();
-//        Game mNewGame = Parcels.unwrap(getIntent().getParcelableExtra("mNewGame"));
-//
-//        Log.v("FindGameActivity", mNewGame.getTitle());
-//
-//        mGames.add(mNewGame);
-
-
-
-
-
     }
 
     private void getGames() {
-//        User tempUser1 = new User("test_username_1", "test_password_1");
-//        User tempUser2 = new User("test_username_2", "test_password_2");
-//        User tempUser3 = new User("test_username_3", "test_password_3");
-//        Game tempGame1 = new Game(tempUser1, true, "test_title_1", "test_description_1", "test_location_1", "9/19/2017");
-//        Game tempGame2 = new Game(tempUser2, true, "test_title_2", "test_description_2", "test_location_2", "9/20/2017");
-//        Game tempGame3 = new Game(tempUser3, true, "test_title_3", "test_description_3", "test_location_3", "9/21/2017");
-//        mGames.add(tempGame1);
-//        mGames.add(tempGame2);
-//        mGames.add(tempGame3);
-
-
 
         final MeetupService meetupService = new MeetupService();
-        meetupService.findGames("97215", new Callback() {
+        meetupService.findGames(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -84,21 +58,9 @@ public class FindGameActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) throws IOException {
                 mGames = meetupService.processResults(response);
 
-//                User tempUser1 = new User("test_username_1", "test_password_1");
-//                User tempUser2 = new User("test_username_2", "test_password_2");
-//                User tempUser3 = new User("test_username_3", "test_password_3");
-//                Game tempGame1 = new Game(tempUser1, true, "test_title_1", "test_description_1", "test_location_1", "9/19/2017");
-//                Game tempGame2 = new Game(tempUser2, true, "test_title_2", "test_description_2", "test_location_2", "9/20/2017");
-//                Game tempGame3 = new Game(tempUser3, true, "test_title_3", "test_description_3", "test_location_3", "9/21/2017");
-//                mGames.add(tempGame1);
-//                mGames.add(tempGame2);
-//                mGames.add(tempGame3);
-
                 FindGameActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
 
                         mNewGame = Parcels.unwrap(getIntent().getParcelableExtra("mNewGame"));
                         if(mNewGame != null) {
@@ -106,16 +68,8 @@ public class FindGameActivity extends AppCompatActivity {
                             Log.v("FindGameActivity", "Purportedly adding new game!");
                         }
 
-
-
                         GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
                         mRecyclerView.setAdapter(adapter);
-
-//                        for (Game game : mGames) {
-//                            Log.v(TAG, "Title: " + game.getTitle());
-//                            Log.v(TAG, "Date: " + game.getDateTime());
-//                            Log.v(TAG, "Location: " + game.getLocation());
-//                        }
                     }
                 });
             }
@@ -133,5 +87,4 @@ public class FindGameActivity extends AppCompatActivity {
             }
         });
     }
-
 }

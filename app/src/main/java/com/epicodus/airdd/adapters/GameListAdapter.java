@@ -36,7 +36,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                String thisGameName = ((TextView)((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(0)).getText().toString(); // OH MY GOD THERE MUST BE A BETTER WAY THAN THIS...
+                String thisGameName = ((TextView)((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(0)).getText().toString(); //TODO: Refactor
                 Intent intent = new Intent(context, GameDetailsActivity.class);
                 intent.putExtra("thisGame", Parcels.wrap(Game.findByTitle(mGames, thisGameName)));
                 context.startActivity(intent);

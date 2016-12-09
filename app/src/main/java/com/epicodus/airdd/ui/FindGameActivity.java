@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ToggleButton;
 
 import com.epicodus.airdd.R;
@@ -69,44 +68,33 @@ public class FindGameActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-//                try {
-//                    String jsonData = response.body().string();
-//                    if(response.isSuccessful()) {
-//                        Log.d(TAG, jsonData);
-//                        mGames = meetupService.processResults(response);
-//                    }
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
-
                 mGames = meetupService.processResults(response);
+
+//                User tempUser1 = new User("test_username_1", "test_password_1");
+//                User tempUser2 = new User("test_username_2", "test_password_2");
+//                User tempUser3 = new User("test_username_3", "test_password_3");
+//                Game tempGame1 = new Game(tempUser1, true, "test_title_1", "test_description_1", "test_location_1", "9/19/2017");
+//                Game tempGame2 = new Game(tempUser2, true, "test_title_2", "test_description_2", "test_location_2", "9/20/2017");
+//                Game tempGame3 = new Game(tempUser3, true, "test_title_3", "test_description_3", "test_location_3", "9/21/2017");
+//                mGames.add(tempGame1);
+//                mGames.add(tempGame2);
+//                mGames.add(tempGame3);
 
                 FindGameActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
-
                         GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
                         mRecyclerView.setAdapter(adapter);
 
-                        for (Game game : mGames) {
-                            Log.v(TAG, "Title: " + game.getTitle());
-                            Log.v(TAG, "Date: " + game.getDateTime());
-                            Log.v(TAG, "Location: " + game.getLocation());
-                        }
+//                        for (Game game : mGames) {
+//                            Log.v(TAG, "Title: " + game.getTitle());
+//                            Log.v(TAG, "Date: " + game.getDateTime());
+//                            Log.v(TAG, "Location: " + game.getLocation());
+//                        }
                     }
                 });
-
-
             }
         });
-
-
-
-
 
         Game newGame = Parcels.unwrap(getIntent().getParcelableExtra("newGame"));
         if(newGame != null) {

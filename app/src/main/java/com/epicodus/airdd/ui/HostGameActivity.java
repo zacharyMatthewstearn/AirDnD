@@ -64,7 +64,7 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                     newGame = new Game(temp, mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString());
 
                     intent = new Intent(HostGameActivity.this, FindGameActivity.class);
-                    intent.putExtra("newGame", Parcels.wrap(newGame));
+                    intent.putExtra("mNewGame", Parcels.wrap(newGame));
                     startActivity(intent);
 
                     Toast.makeText(this, "Your game has been posted!", Toast.LENGTH_SHORT).show();

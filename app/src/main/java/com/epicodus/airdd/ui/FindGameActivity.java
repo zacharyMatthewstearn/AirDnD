@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ToggleButton;
 
 import com.epicodus.airdd.R;
@@ -32,6 +33,7 @@ public class FindGameActivity extends AppCompatActivity {
     private GameListAdapter mAdapter;
 
     public ArrayList<Game> mGames = new ArrayList<>();
+    Game mNewGame = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,18 @@ public class FindGameActivity extends AppCompatActivity {
 //        mRecyclerView.setAdapter(adapter);
 
         getGames();
+
+//        Intent intent = getIntent();
+//        Game mNewGame = Parcels.unwrap(getIntent().getParcelableExtra("mNewGame"));
+//
+//        Log.v("FindGameActivity", mNewGame.getTitle());
+//
+//        mGames.add(mNewGame);
+
+
+
+
+
     }
 
     private void getGames() {
@@ -83,6 +97,17 @@ public class FindGameActivity extends AppCompatActivity {
                 FindGameActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+
+
+                        mNewGame = Parcels.unwrap(getIntent().getParcelableExtra("mNewGame"));
+                        if(mNewGame != null) {
+                            mGames.add(mNewGame);
+                            Log.v("FindGameActivity", "Purportedly adding new game!");
+                        }
+
+
+
                         GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
                         mRecyclerView.setAdapter(adapter);
 
@@ -95,11 +120,6 @@ public class FindGameActivity extends AppCompatActivity {
                 });
             }
         });
-
-        Game newGame = Parcels.unwrap(getIntent().getParcelableExtra("newGame"));
-        if(newGame != null) {
-            mGames.add(newGame);
-        }
 
         FindGameActivity.this.runOnUiThread(new Runnable() {
             @Override

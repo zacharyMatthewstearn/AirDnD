@@ -1,12 +1,15 @@
 package com.epicodus.airdd.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ToggleButton;
 
+import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
@@ -30,7 +33,9 @@ public class FindGameActivity extends AppCompatActivity {
     @Bind(R.id.toggleButton_Play) ToggleButton mPlayToggleButton;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
+    private SharedPreferences mSharedPreferences;
     private GameListAdapter mAdapter;
+    private String mUid;
 
     public ArrayList<Game> mGames = new ArrayList<>();
     Game mNewGame = null;
@@ -40,6 +45,9 @@ public class FindGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_game);
         ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
 
         getGames();
     }

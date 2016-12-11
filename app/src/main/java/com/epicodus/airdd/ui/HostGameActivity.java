@@ -1,7 +1,9 @@
 package com.epicodus.airdd.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.models.User;
@@ -32,6 +35,10 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.button_postGame) Button mButtonPostGame;
     @Bind(R.id.button_cancel) Button mButtonCancel;
 
+    private SharedPreferences mSharedPreferences;
+    private String mUid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,9 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
         mToggleButtonPlay.setOnClickListener(this);
         mButtonPostGame.setOnClickListener(this);
         mButtonCancel.setOnClickListener(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
     }
 
     @Override

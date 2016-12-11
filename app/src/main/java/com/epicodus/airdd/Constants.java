@@ -7,4 +7,6 @@ public class Constants {
     public static final String API_PAGE_QUERY_PARAMETER = "page";
     public static final String API_KEY_QUERY_PARAMETER = "key";
     public static final String API_KEY = BuildConfig.API_KEY;
+
+    public static final String PREFERENCES_UID_KEY = "uid";
 }

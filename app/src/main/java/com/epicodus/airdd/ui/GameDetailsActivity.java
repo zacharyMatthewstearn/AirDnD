@@ -1,14 +1,17 @@
 package com.epicodus.airdd.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 
@@ -26,6 +29,9 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     @Bind(R.id.timeTextView) TextView mTimeTextView;
     @Bind(R.id.locationTextView) TextView mLocationTextView;
 
+    private SharedPreferences mSharedPreferences;
+    private String mUid;
+
     public Game mGame;
 
     @Override
@@ -35,6 +41,9 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         ButterKnife.bind(this);
 
         mLocationTextView.setOnClickListener(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
 
         mGame = Parcels.unwrap(getIntent().getParcelableExtra("thisGame"));
         if(mGame != null) {

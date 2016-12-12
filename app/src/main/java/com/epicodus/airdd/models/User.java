@@ -7,12 +7,14 @@ public class User {
 
     // MEMBER VARIABLES
     String mUsername = "";
+    String mEmail = "";
     String mPassword = "";
-//    String mAddress = "";
+    String mUid = "";
 
     // CONSTRUCTORS
-    public User(String username, String password) {
+    public User(String username, String email, String password) {
         mUsername = username;
+        mEmail = email;
         mPassword = password;
     }
 
@@ -22,17 +24,27 @@ public class User {
     public String getUsername() {
         return mUsername;
     }
+    public String getEmail() {
+        return mEmail;
+    }
     public String getPassword() {
         return mPassword;
     }
-//    public String getAddress() {return mAddress; }
+    public String getUid() {
+        return mUid;
+    }
 
     // SETTERS
     public void setUsername(String username) {
         mUsername = username;
     }
+    public void setEmail(String email) {
+        mEmail = email;
+    }
     public void setPassword(String password) {
         mPassword = password;
     }
-//    public void setAddress(String address) { mAddress = address; }
+    public void setUid(String uid) {
+        mUsername = uid;
+    }
 }

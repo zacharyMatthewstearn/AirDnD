@@ -53,6 +53,7 @@ public class MeetupService {
                     JSONObject gameJSON = gamesJSON.getJSONObject(i);
 
                     String hostUsername = "HOST";
+                    String hostEmail = "HOST@EMAIL.COM";
                     String hostPassword = "HOST USER PASSWORD";
                     String address_1 = "";
                     String city = "";
@@ -112,10 +113,11 @@ public class MeetupService {
                         e.printStackTrace();
                     }
 
-                    User host = new User(hostUsername, hostPassword);
+                    User host = new User(hostUsername, hostEmail, hostPassword);
+                    String hostID = ""; //TODO: ADD A THING HERE
                     String location = address_1 + " " + city + ", " + state + " " + zip;
 
-                    Game game = new Game(host, ownerDM, title, description, location, dateTime+"");
+                    Game game = new Game(hostID, ownerDM, title, description, location, dateTime+"");
                     games.add(game);
                 }
             }

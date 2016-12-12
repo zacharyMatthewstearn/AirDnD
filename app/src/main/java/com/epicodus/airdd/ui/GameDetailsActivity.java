@@ -52,7 +52,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
             mTimeTextView.setText(mGame.getDateTime());
             mLocationTextView.setText(mGame.getLocation());
             if(mGame.getHost() != null) {
-                mHostTextView.setText(mGame.getHost().getUsername());
+//                mHostTextView.setText(mGame.getHost().getUsername()); // TODO: ADD A THING HERE
             }
             else {
                 mHostTextView.setText("ERROR: no host for this game");

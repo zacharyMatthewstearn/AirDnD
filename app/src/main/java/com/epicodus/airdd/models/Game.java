@@ -12,21 +12,21 @@ public class Game {
     static ArrayList<Game> ALL_GAMES;
 
     // MEMBER VARIABLES
-    User mHost = null;
-    User mDM = null;
-    List<User> mPlayers = new ArrayList<>();
+    String mHostID = null;
+    String mDMID = null;
+    List<String> mPlayerIDs = new ArrayList<>();
     String mTitle = "";
     String mDescription = "";
     String mLocation = "";
     String mDateTime = "";
 
     // CONSTRUCTORS
-    public Game(User host, boolean ownerDM, String title, String description, String location, String dateTime) {
-        mHost = host;
+    public Game(String hostID, boolean ownerDM, String title, String description, String location, String dateTime) {
+        mHostID = hostID;
         if(ownerDM)
-            mDM = host;
+            mDMID = hostID;
         else
-            mPlayers.add(host);
+            mPlayerIDs.add(hostID);
         mTitle = title;
         mDescription = description;
         mLocation = location;
@@ -45,14 +45,14 @@ public class Game {
     }
 
     // GETTERS
-    public User getHost() {
-        return mHost;
+    public String getHost() {
+        return mHostID;
     }
-    public User getDM() {
-        return mDM;
+    public String getDM() {
+        return mDMID;
     }
-    public List<User> getPlayers() {
-        return mPlayers;
+    public List<String> getPlayers() {
+        return mPlayerIDs;
     }
     public String getTitle() {
         return mTitle;
@@ -68,15 +68,10 @@ public class Game {
     }
 
     // SETTERS
-    public void setHost(User host) {
-        mHost = host;
-    }
-    public void setDM(User dm) {
-        mDM = dm;
-    }
-    public void setPlayers(List<User> players) {
-        mPlayers = players;
-    }
+    public void setHost(String hostID) { mHostID = hostID; }
+    public void setDM(String dmID) { mDMID = dmID; }
+    public void setPlayers(List<String> playerIDs) { mPlayerIDs = playerIDs;}
+    public void addPlayers(String playerID) { mPlayerIDs.add(playerID);}
     public void setTitle(String title) {
         mTitle = title;
     }

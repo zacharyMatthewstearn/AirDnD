@@ -16,6 +16,8 @@ import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.models.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
@@ -35,6 +37,7 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.button_postGame) Button mButtonPostGame;
     @Bind(R.id.button_cancel) Button mButtonCancel;
 
+    private DatabaseReference mNewGameReference;
     private SharedPreferences mSharedPreferences;
     private String mUid;
 
@@ -52,12 +55,17 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
+
+        mNewGameReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("games");
     }
 
     @Override
     public void onClick(View view) {
         Intent intent;
-        User temp = new User("Guest", "password");
+        User temp = new User("Guest", "guest@email.com", "password");
         Game newGame;
         switch(view.getId()) {
             case R.id.toggleButton_DM:
@@ -71,7 +79,15 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                    mEditTextDate.getText().toString().length() > 0 &&
                    mEditTextDescription.getText().toString().length() > 0) {
 
-                    newGame = new Game(temp, mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString());
+                    newGame = new Game("", mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString()); // TODO: ADD A THING HERE
+
+
+
+
+                    saveGameToFirebase(newGame);
+
+
+
 
                     intent = new Intent(HostGameActivity.this, FindGameActivity.class);
                     intent.putExtra("mNewGame", Parcels.wrap(newGame));
@@ -90,5 +106,9 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
             default:
                 Log.d(TAG, "HostGameActivity onClick received bad argument for 'view'");
         }
+    }
+
+    private void saveGameToFirebase(Game newGame) {
+        mNewGameReference.setValue(newGame);
     }
 }

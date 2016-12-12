@@ -16,6 +16,7 @@ import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.models.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,6 +39,7 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.button_cancel) Button mButtonCancel;
 
     private DatabaseReference mNewGameReference;
+    private FirebaseAuth mAuth;
     private SharedPreferences mSharedPreferences;
     private String mUid;
 
@@ -55,6 +57,8 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
+
+        mAuth = FirebaseAuth.getInstance();
 
         mNewGameReference = FirebaseDatabase
                 .getInstance()
@@ -79,12 +83,21 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                    mEditTextDate.getText().toString().length() > 0 &&
                    mEditTextDescription.getText().toString().length() > 0) {
 
-                    newGame = new Game("", mToggleButtonDM.isChecked(), mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString()); // TODO: ADD A THING HERE
+                    newGame = new Game(mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString(), mToggleButtonDM.isChecked()); // TODO: ADD A THING HERE
 
 
 
 
                     saveGameToFirebase(newGame);
+                    if(mAuth.getCurrentUser() != null) {
+                        newGame.setHostId(mAuth.getCurrentUser().getUid());
+                        mNewGameReference.setValue(newGame);
+                    }
+                    else {
+                        Log.w(TAG, "No current user");
+                    }
+                    Log.d(TAG, newGame.getHostId());
+
 
 
 
@@ -109,6 +122,6 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void saveGameToFirebase(Game newGame) {
-        mNewGameReference.setValue(newGame);
+        mNewGameReference.push().setValue(newGame);
     }
 }

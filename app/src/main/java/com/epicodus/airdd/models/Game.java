@@ -12,25 +12,22 @@ public class Game {
     static ArrayList<Game> ALL_GAMES;
 
     // MEMBER VARIABLES
-    String mHostID = null;
-    String mDMID = null;
-    List<String> mPlayerIDs = new ArrayList<>();
-    String mTitle = "";
-    String mDescription = "";
-    String mLocation = "";
-    String mDateTime = "";
+    String hostId = null;
+    String dmId = null;
+    List<String> playerIds = new ArrayList<>();
+    String title = "";
+    String description = "";
+    String location = "";
+    String dateTime = "";
+    boolean hostDm = true;
 
     // CONSTRUCTORS
-    public Game(String hostID, boolean ownerDM, String title, String description, String location, String dateTime) {
-        mHostID = hostID;
-        if(ownerDM)
-            mDMID = hostID;
-        else
-            mPlayerIDs.add(hostID);
-        mTitle = title;
-        mDescription = description;
-        mLocation = location;
-        mDateTime = dateTime;
+    public Game(String title, String description, String location, String dateTime, boolean hostDm) {
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.dateTime = dateTime;
+        this.hostDm = hostDm;
     }
     public Game() {    }
 
@@ -45,43 +42,49 @@ public class Game {
     }
 
     // GETTERS
-    public String getHost() {
-        return mHostID;
+    public String getHostId() {
+        return hostId;
     }
-    public String getDM() {
-        return mDMID;
+    public String getDmId() {
+        return dmId;
     }
-    public List<String> getPlayers() {
-        return mPlayerIDs;
+    public List<String> getPlayerIds() {
+        return playerIds;
     }
     public String getTitle() {
-        return mTitle;
+        return title;
     }
     public String getDescription() {
-        return mDescription;
+        return description;
     }
     public String getLocation() {
-        return mLocation;
+        return location;
     }
     public String getDateTime() {
-        return mDateTime;
+        return dateTime;
     }
 
     // SETTERS
-    public void setHost(String hostID) { mHostID = hostID; }
-    public void setDM(String dmID) { mDMID = dmID; }
-    public void setPlayers(List<String> playerIDs) { mPlayerIDs = playerIDs;}
-    public void addPlayers(String playerID) { mPlayerIDs.add(playerID);}
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setTitle(String title) { this.title = title; }
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
     public void setLocation(String location) {
-        mLocation = location;
+        this.location = location;
     }
-    public void setDateTime(String dateTime) {
-        mDateTime = dateTime;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    public void setDmId(String dmId) { this.dmId = dmId; }
+    public void setPlayerIds(List<String> playerIds) { this.playerIds = playerIds; }
+    public void setHostId(String hostId) {
+        this.hostId = hostId;
+        if(this.hostDm)
+            dmId = hostId;
+        else
+            addPlayerId(hostId);
+    }
+
+    public void addPlayerId(String playerId) { this.playerIds.add(playerId); }
 }

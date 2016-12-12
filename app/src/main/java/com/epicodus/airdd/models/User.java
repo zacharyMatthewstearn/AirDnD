@@ -6,45 +6,43 @@ import org.parceler.Parcel;
 public class User {
 
     // MEMBER VARIABLES
-    String mUsername = "";
-    String mEmail = "";
-    String mPassword = "";
-    String mUid = "";
+    String username = "";
+    String email = "";
+    String password = "";
+    String uid = "";
 
     // CONSTRUCTORS
     public User(String username, String email, String password) {
-        mUsername = username;
-        mEmail = email;
-        mPassword = password;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public User() {     }
 
     // GETTERS
     public String getUsername() {
-        return mUsername;
+        return username;
     }
     public String getEmail() {
-        return mEmail;
+        return email;
     }
     public String getPassword() {
-        return mPassword;
+        return password;
     }
-    public String getUid() {
-        return mUid;
-    }
+    public String getUid() { return uid; }
 
     // SETTERS
     public void setUsername(String username) {
-        mUsername = username;
+        this.username = username;
     }
     public void setEmail(String email) {
-        mEmail = email;
+        this.email = email;
     }
     public void setPassword(String password) {
-        mPassword = password;
+        this.password = password;
     }
     public void setUid(String uid) {
-        mUsername = uid;
+        username = uid;
     }
 }

@@ -13,12 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.epicodus.airdd.R;
+import com.epicodus.airdd.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +36,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.confirmPasswordEditText) EditText mConfirmPasswordEditText;
     @Bind(R.id.loginTextView) TextView mLoginTextView;
 
+    private DatabaseReference mNewUserReference;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressDialog mAuthProgressDialog;
@@ -47,6 +51,12 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         mAuth = FirebaseAuth.getInstance();
         createAuthStateListener();
         createAuthProgressDialog();
+
+        mNewUserReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("users");
+
 
         mLoginTextView.setOnClickListener(this);
         mCreateUserButton.setOnClickListener(this);
@@ -124,6 +134,19 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, user.getDisplayName());
+
+                    User newUser = new User(user.getDisplayName(), user.getEmail(), "KEPT SEPARATE FOR SECURITY PURPOSES");
+                    newUser.setUid(user.getUid());
+                    saveUserToFirebase(newUser);
+
+
+
+
+
+
+
+
+
                 }
             }
         });
@@ -172,5 +195,9 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             return false;
         }
         return true;
+    }
+
+    private void saveUserToFirebase(User newUser) {
+        mNewUserReference.push().setValue(newUser);
     }
 }

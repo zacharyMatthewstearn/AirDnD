@@ -62,8 +62,7 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
 
         mNewGameReference = FirebaseDatabase
                 .getInstance()
-                .getReference()
-                .child("games");
+                .getReference("games");
     }
 
     @Override
@@ -88,15 +87,15 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-                    saveGameToFirebase(newGame);
+
                     if(mAuth.getCurrentUser() != null) {
                         newGame.setHostId(mAuth.getCurrentUser().getUid());
-                        mNewGameReference.setValue(newGame);
+                        saveGameToFirebase(newGame);
                     }
                     else {
                         Log.w(TAG, "No current user");
                     }
-                    Log.d(TAG, newGame.getHostId());
+
 
 
 

@@ -20,8 +20,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private static final int MAX_WIDTH = 200;
-    private static final int MAX_HEIGHT = 200;
 
     View mView;
     Context mContext;
@@ -35,12 +33,12 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
 
     public void bindGame(Game game) {
         TextView mTextViewTitle = (TextView) mView.findViewById(R.id.TextViewGameTitle);
-//        TextView mTextViewDateTime = (TextView) mView.findViewById(R.id.TextViewGameDateTime);
-//        TextView mTextViewLocation = (TextView) mView.findViewById(R.id.TextViewGameLocation);
+        TextView mTextViewDateTime = (TextView) mView.findViewById(R.id.TextViewGameDateTime);
+        TextView mTextViewLocation = (TextView) mView.findViewById(R.id.TextViewGameLocation);
 
         mTextViewTitle.setText(game.getTitle());
-//        mTextViewDateTime.setText(game.getDateTime());
-//        mTextViewLocation.setText(game.getDescription());
+        mTextViewDateTime.setText(game.getDateTime());
+        mTextViewLocation.setText(game.getDescription());
     }
 
     @Override
@@ -55,11 +53,10 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
                     games.add(snapshot.getValue(Game.class));
                 }
 
-//                int itemPosition = getLayoutPosition();
+                int itemPosition = getLayoutPosition();
 
                 Intent intent = new Intent(mContext, GameDetailsActivity.class);
-//                intent.putExtra("position", itemPosition + "");
-                intent.putExtra("games", Parcels.wrap(games));
+                intent.putExtra("thisGame", Parcels.wrap(games.get(itemPosition)));
 
                 mContext.startActivity(intent);
             }

@@ -20,5 +20,23 @@
             android:text="TITLE"
             android:textColor="@color/colorPrimary"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TextViewGameDateTime"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="DATETIME"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TextViewGameLocation"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="LOCATION"
+            android:textColor="@color/colorPrimary"/>
+
     </LinearLayout>
 </LinearLayout>

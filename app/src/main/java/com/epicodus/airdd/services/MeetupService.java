@@ -28,7 +28,7 @@ public class MeetupService {
         urlBuilder.addQueryParameter(Constants.API_KEY_QUERY_PARAMETER, Constants.API_KEY);
         urlBuilder.addQueryParameter(Constants.API_GROUP_URLNAME_QUERY_PARAMETER, "dndaloregon");
         urlBuilder.addQueryParameter(Constants.API_SIGN_QUERY_PARAMETER, "true");
-        urlBuilder.addQueryParameter(Constants.API_PAGE_QUERY_PARAMETER, "20");
+        urlBuilder.addQueryParameter(Constants.API_PAGE_QUERY_PARAMETER, "10");
         String url = urlBuilder.build().toString();
 
         Request request= new Request.Builder()

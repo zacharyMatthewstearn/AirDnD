@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     @Bind(R.id.dmTextView) TextView mDmTextView;
     @Bind(R.id.playersTextView) TextView mPlayersTextView;
     @Bind(R.id.descriptionTextView) TextView mDescriptionTextView;
+    @Bind(R.id.joinButton) Button mJoinButton;
 
     private SharedPreferences mSharedPreferences;
     private DatabaseReference mUsersReference;
@@ -51,6 +53,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         ButterKnife.bind(this);
 
         mLocationTextView.setOnClickListener(this);
+        mJoinButton.setOnClickListener(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
@@ -141,19 +144,17 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
-
-
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.locationTextView: // TODO: MAKE THIS DYNAMIC
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("geo:" + "45.5207050"
-                                + "," + "-122.6773970"
-                                + "?q=(" + "Epicodus" + ")"));
+            case R.id.locationTextView:
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + mGame.getLocation()));
                 startActivity(mapIntent);
+                break;
+            case R.id.joinButton:
+                Log.d(TAG, "Joined!");
                 break;
             default:
                 Log.d(TAG, "GameDetailsActivity onClick received bad argument for 'view'");

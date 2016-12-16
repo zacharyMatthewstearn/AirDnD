@@ -12,94 +12,35 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ToggleButton;
 
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
+import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class FindGameActivity extends AppCompatActivity {
     public static final String TAG = FindGameActivity.class.getSimpleName();
-//
-//    @Bind(R.id.toggleButton_DM) ToggleButton mDMToggleButton;
-//    @Bind(R.id.toggleButton_Play) ToggleButton mPlayToggleButton;
-//    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-//
-//    private SharedPreferences mSharedPreferences;
-//    private GameListAdapter mAdapter;
-//    private String mUid;
-//
-//    public ArrayList<Game> mGames = new ArrayList<>();
-//    Game mNewGame = null;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_find_game);
-//        ButterKnife.bind(this);
-//
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
-//
-//        getGames();
-//    }
-//
-//    private void getGames() {
-//
-//        final MeetupService meetupService = new MeetupService();
-//        meetupService.findGames(new Callback() {
-//
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, final Response response) throws IOException {
-//                mGames = meetupService.processResults(response);
-//
-//                FindGameActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        mNewGame = Parcels.unwrap(getIntent().getParcelableExtra("mNewGame"));
-//                        if(mNewGame != null) {
-//                            mGames.add(mNewGame);
-//                            Log.v("FindGameActivity", "Purportedly adding new game!");
-//                        }
-//
-//                        GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
-//                        mRecyclerView.setAdapter(adapter);
-//                    }
-//                });
-//            }
-//        });
-//
-//        FindGameActivity.this.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mAdapter = new GameListAdapter(getApplicationContext(), mGames);
-//                mRecyclerView.setAdapter(mAdapter);
-//                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FindGameActivity.this);
-//
-//                mRecyclerView.setLayoutManager(layoutManager);
-//                mRecyclerView.setHasFixedSize(true);
-//            }
-//        });
-//    }
 
-
+    @Bind(R.id.toggleButton_DM) ToggleButton mDMToggleButton;
+    @Bind(R.id.toggleButton_Play) ToggleButton mPlayToggleButton;
+    @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
+//    @Bind(R.id.recyclerViewAPI) RecyclerView mRecyclerViewAPI;
 
     private DatabaseReference mGameReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
 
-    @Bind(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    private GameListAdapter mAdapter;
+    private List<Game> mGames = new ArrayList<>();
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -109,7 +50,6 @@ public class FindGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_find_game);
         ButterKnife.bind(this);
 
@@ -118,6 +58,8 @@ public class FindGameActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+
+//        getAPIGames();
     }
 
     private void setUpFirebaseAdapter() {
@@ -131,9 +73,9 @@ public class FindGameActivity extends AppCompatActivity {
                 viewHolder.bindGame(model);
             }
         };
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mFirebaseAdapter);
+        mRecyclerViewFirebase.setHasFixedSize(true);
+        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
     }
 
     @Override
@@ -153,9 +95,6 @@ public class FindGameActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
         ButterKnife.bind(this);
-
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mEditor = mSharedPreferences.edit();
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
@@ -187,4 +126,45 @@ public class FindGameActivity extends AppCompatActivity {
     private void addToSharedPreferences(String searchTerm) {
         mEditor.putString("search_term", searchTerm).apply();
     }
+
+
+
+
+
+//    private void getAPIGames() {
+//
+//        final MeetupService meetupService = new MeetupService();
+//        meetupService.findGames(new Callback() {
+//
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, final Response response) throws IOException {
+//                mGames = meetupService.processResults(response);
+//
+//                FindGameActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
+//                        mRecyclerViewAPI.setAdapter(adapter);
+//                    }
+//                });
+//            }
+//        });
+//
+//        FindGameActivity.this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mAdapter = new GameListAdapter(getApplicationContext(), mGames);
+//                mRecyclerViewAPI.setAdapter(mAdapter);
+//                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FindGameActivity.this);
+//
+//                mRecyclerViewAPI.setLayoutManager(layoutManager);
+//                mRecyclerViewAPI.setHasFixedSize(true);
+//            }
+//        });
+//    }
 }

@@ -15,6 +15,7 @@ import com.epicodus.airdd.ui.GameDetailsActivity;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,9 +23,9 @@ import butterknife.ButterKnife;
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
     private static final String TAG = GameListAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<Game> mGames = new ArrayList<>();
+    private List<Game> mGames = new ArrayList<>();
 
-    public GameListAdapter(Context context, ArrayList<Game> games) {
+    public GameListAdapter(Context context, List<Game> games) {
         mContext = context;
         mGames = games;
     }
@@ -42,6 +43,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
                 context.startActivity(intent);
             }
         });
+
         GameViewHolder viewHolder = new GameViewHolder(view);
         return viewHolder;
     }

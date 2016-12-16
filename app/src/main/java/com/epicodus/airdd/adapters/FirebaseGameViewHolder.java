@@ -38,7 +38,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
 
         mTextViewTitle.setText(game.getTitle());
         mTextViewDateTime.setText(game.getDateTime());
-        mTextViewLocation.setText(game.getDescription());
+        mTextViewLocation.setText(game.getLocation());
     }
 
     @Override

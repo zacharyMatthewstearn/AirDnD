@@ -9,7 +9,7 @@ import java.util.List;
 public class Game {
 
     // STATIC VARIABLES
-    static ArrayList<Game> ALL_GAMES;
+    static List<Game> ALL_GAMES = new ArrayList<>();
 
     // MEMBER VARIABLES
     String hostId = "";
@@ -32,7 +32,7 @@ public class Game {
     public Game() {    }
 
     // STATIC METHODS
-    public static Game findByTitle(ArrayList<Game> games, String title) {
+    public static Game findByTitle(List<Game> games, String title) {
         for(int i = 0; i < games.size(); i++) {
             if(games.get(i).getTitle().equals(title)) {
                 return games.get(i);

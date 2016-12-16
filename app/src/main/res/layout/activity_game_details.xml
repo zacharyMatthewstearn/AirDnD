@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Players"
+        android:text="Players: "
         android:id="@+id/playersTextView"
         android:textSize="30sp"
         android:layout_below="@+id/dmTextView"
@@ -49,7 +49,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DM"
+        android:text="DM: "
         android:id="@+id/dmTextView"
         android:textSize="30sp"
         android:layout_below="@+id/hostTextView"
@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Host"
+        android:text="Host: "
         android:id="@+id/hostTextView"
         android:textSize="30sp"
         android:layout_below="@+id/locationTextView"

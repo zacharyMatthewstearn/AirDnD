@@ -12,8 +12,8 @@ public class Game {
     static ArrayList<Game> ALL_GAMES;
 
     // MEMBER VARIABLES
-    String hostId = null;
-    String dmId = null;
+    String hostId = "";
+    String dmId = "";
     List<String> playerIds = new ArrayList<>();
     String title = "";
     String description = "";
@@ -81,7 +81,7 @@ public class Game {
     public void setHostId(String hostId) {
         this.hostId = hostId;
         if(this.hostDm)
-            dmId = hostId;
+            setDmId(hostId);
         else
             addPlayerId(hostId);
     }

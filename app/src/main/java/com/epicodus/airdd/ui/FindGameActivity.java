@@ -1,9 +1,17 @@
 package com.epicodus.airdd.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
@@ -16,7 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class FindGameActivity extends AppCompatActivity {
-//    public static final String TAG = FindGameActivity.class.getSimpleName();
+    public static final String TAG = FindGameActivity.class.getSimpleName();
 //
 //    @Bind(R.id.toggleButton_DM) ToggleButton mDMToggleButton;
 //    @Bind(R.id.toggleButton_Play) ToggleButton mPlayToggleButton;
@@ -93,6 +101,11 @@ public class FindGameActivity extends AppCompatActivity {
     @Bind(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+    private String mSearchTerm;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +115,9 @@ public class FindGameActivity extends AppCompatActivity {
 
         mGameReference = FirebaseDatabase.getInstance().getReference("games");
         setUpFirebaseAdapter();
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
     }
 
     private void setUpFirebaseAdapter() {
@@ -128,4 +144,47 @@ public class FindGameActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mEditor = mSharedPreferences.edit();
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                addToSharedPreferences(query);
+//                searchGames(query);
+                Log.v(TAG, "search submitted: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addToSharedPreferences(String searchTerm) {
+        mEditor.putString("search_term", searchTerm).apply();
+    }
 }

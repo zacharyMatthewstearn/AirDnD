@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
@@ -30,6 +31,8 @@ import butterknife.ButterKnife;
 public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = GameDetailsActivity.class.getSimpleName();
 
+    @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
+    @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
     @Bind(R.id.titleTextView) TextView mTitleTextView;
     @Bind(R.id.timeTextView) TextView mTimeTextView;
     @Bind(R.id.locationTextView) TextView mLocationTextView;
@@ -52,6 +55,8 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_game_details);
         ButterKnife.bind(this);
 
+        mToggleButtonDM.setOnClickListener(this);
+        mToggleButtonPlay.setOnClickListener(this);
         mLocationTextView.setOnClickListener(this);
         mJoinButton.setOnClickListener(this);
 
@@ -149,12 +154,23 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
+            case R.id.toggleButton_DM:
+                mToggleButtonPlay.setChecked(!mToggleButtonPlay.isChecked());
+                break;
+            case R.id.toggleButton_Play:
+                mToggleButtonDM.setChecked(!mToggleButtonDM.isChecked());
+                break;
             case R.id.locationTextView:
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + mGame.getLocation()));
                 startActivity(mapIntent);
                 break;
             case R.id.joinButton:
-                Log.d(TAG, "Joined!");
+                if(mToggleButtonDM.isChecked()) {
+                    Log.d(TAG, "Joined as the DM!");
+                }
+                else {
+                    Log.d(TAG, "Joined as a PLAYER!");
+                }
                 break;
             default:
                 Log.d(TAG, "GameDetailsActivity onClick received bad argument for 'view'");

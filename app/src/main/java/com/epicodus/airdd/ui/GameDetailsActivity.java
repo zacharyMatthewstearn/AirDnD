@@ -44,7 +44,9 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
     private SharedPreferences mSharedPreferences;
     private DatabaseReference mUsersReference;
+    private DatabaseReference mGamesReference;
     private ValueEventListener mUsersReferenceListener;
+    private ValueEventListener mGamesReferenceListener;
     private FirebaseAuth mAuth;
     private String mUid;
     private Game mGame;
@@ -65,6 +67,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
 
         mAuth = FirebaseAuth.getInstance();
         mUsersReference = FirebaseDatabase.getInstance().getReference().child("users");
+        mGamesReference = FirebaseDatabase.getInstance().getReference().child("games");
 
         mGame = Parcels.unwrap(getIntent().getParcelableExtra("thisGame"));
         if(mGame != null) {
@@ -170,6 +173,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                 }
                 else {
                     Log.d(TAG, "Joined as a PLAYER!");
+
                 }
                 break;
             default:

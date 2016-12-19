@@ -1,7 +1,5 @@
 package com.epicodus.airdd.ui;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +12,8 @@ import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.FirebaseGameListAdapter;
 import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
 import com.epicodus.airdd.models.Game;
-import com.epicodus.airdd.util.OnGameSelectedListener;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.Query;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,32 +23,39 @@ public class GameListFragment extends Fragment {
 
     @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
 
-    private DatabaseReference mGameReference;
-    private FirebaseRecyclerAdapter mFirebaseAdapter;
+//    private DatabaseReference mGameReference;
 
-    private FirebaseGameListAdapter mFirebaseGameListAdapter;
-    public List<Game> mGames = new ArrayList<>();
+    private FirebaseGameListAdapter mFirebaseAdapter;
+//    public List<Game> mGames = new ArrayList<>();
 
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
-    private String mSearchTerm;
-
-    private OnGameSelectedListener mOnGameSelectedListener;
+//    private SharedPreferences mSharedPreferences;
+//    private SharedPreferences.Editor mEditor;
+//    private String mSearchTerm;
+//    private OnGameSelectedListener mOnGameSelectedListener;
 
     public GameListFragment() {
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        mEditor = mSharedPreferences.edit();
+//
+//        setHasOptionsMenu(true);
+//    }
 
-        try {
-            mOnGameSelectedListener = (OnGameSelectedListener) context;
-        }
-        catch(ClassCastException e) {
-            throw new ClassCastException(context.toString() + e.getMessage());
-        }
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        try {
+//            mOnGameSelectedListener = (OnGameSelectedListener) context;
+//        }
+//        catch(ClassCastException e) {
+//            throw new ClassCastException(context.toString() + e.getMessage());
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,8 +68,6 @@ public class GameListFragment extends Fragment {
 //            getGames(mSearchTerm);
 //        }
 //        getGames();
-
-        mGameReference = FirebaseDatabase.getInstance().getReference("games");
         setUpFirebaseAdapter();
 
 
@@ -90,7 +88,7 @@ public class GameListFragment extends Fragment {
 //            public boolean onQueryTextSubmit(String query) {
 //                addToSharedPreferences(query);
 ////                getGames(query);
-//                Log.v(TAG, "search submitted: " + query);
+//                Log.v("GameListFragment", "search submitted: " + query);
 //                return false;
 //            }
 //
@@ -100,15 +98,7 @@ public class GameListFragment extends Fragment {
 //            }
 //        });
 //    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(mFirebaseAdapter != null) {
-            mFirebaseAdapter.cleanup();
-        }
-    }
-
+//
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        return super.onOptionsItemSelected(item);
@@ -132,8 +122,8 @@ public class GameListFragment extends Fragment {
 //
 //                    @Override
 //                    public void run() {
-//                        mFirebaseGameListAdapter = new FirebaseGameListAdapter(getActivity(), mGames, mOnGameSelectedListener);
-//                        mRecyclerView.setAdapter(mFirebaseGameListAdapter);
+//                        mFirebaseAdapter = new FirebaseGameListAdapter(getActivity(), mGames, mOnGameSelectedListener);
+//                        mRecyclerView.setAdapter(mFirebaseAdapter);
 //                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 //                        mRecyclerView.setLayoutManager(layoutManager);
 //                        mRecyclerView.setHasFixedSize(true);
@@ -146,7 +136,10 @@ public class GameListFragment extends Fragment {
 
 
     private void setUpFirebaseAdapter() {
-        mFirebaseGameListAdapter = new FirebaseGameListAdapter(Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, mGameReference, mOnGameSelectedListener, getActivity());
+
+        Query query = FirebaseDatabase.getInstance().getReference("games");
+
+        mFirebaseAdapter = new FirebaseGameListAdapter(Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, query, getActivity());
 
 
 //        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
@@ -160,17 +153,17 @@ public class GameListFragment extends Fragment {
 //        };
 //        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
 
-        mFirebaseGameListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        mRecyclerViewFirebase.setHasFixedSize(true);
+        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                mFirebaseGameListAdapter.notifyDataSetChanged();
+                mFirebaseAdapter.notifyDataSetChanged();
             }
         });
-
-        mRecyclerViewFirebase.setHasFixedSize(true);
-        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerViewFirebase.setAdapter(mFirebaseGameListAdapter);
 
 
     }
@@ -178,5 +171,13 @@ public class GameListFragment extends Fragment {
 //    private void addToSharedPreferences(String searchTerm) {
 //        mEditor.putString("search_term", searchTerm).apply();
 //    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mFirebaseAdapter != null) {
+            mFirebaseAdapter.cleanup();
+        }
+    }
 
 }

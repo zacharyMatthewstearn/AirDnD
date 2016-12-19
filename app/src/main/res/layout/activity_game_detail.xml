@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.GameDetailActivity">
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton_DM"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginEnd="205dp"
+        android:layout_alignParentStart="true"
+        android:textOn="I want to DM!"
+        android:textOff="I don&apos;t want to DM."
+        android:checked="false"
+        android:background="@color/colorPrimaryLight"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="205dp" />
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton_Play"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginStart="205dp"
+        android:layout_alignParentEnd="true"
+        android:textOff="I don&apos;t want to play."
+        android:textOn="I want to play!"
+        android:background="@color/colorPrimaryLight"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="205dp"
+        android:checked="true" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toggleButton_DM"
+        android:layout_above="@+id/joinButton">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pagerHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" />
+
+    </android.support.v4.view.ViewPager>
+
+    <!--<fragment-->
+        <!--android:id="@+id/fragmentGameDetail"-->
+        <!--android:name="com.epicodus.airdd.ui.GameDetailFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/toggleButton_DM"-->
+        <!--android:layout_above="@+id/joinButton"-->
+        <!--tools:layout="@layout/fragment_game_detail" />-->
+
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_below="@+id/toggleButton_DM"-->
+        <!--android:layout_above="@+id/joinButton">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Title"-->
+            <!--android:id="@+id/titleTextView"-->
+            <!--android:textSize="40sp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Time"-->
+            <!--android:id="@+id/timeTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/titleTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Players: "-->
+            <!--android:id="@+id/playersTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/dmTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Description"-->
+            <!--android:id="@+id/descriptionTextView"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_below="@+id/playersTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="DM: "-->
+            <!--android:id="@+id/dmTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/hostTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Host: "-->
+            <!--android:id="@+id/hostTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/locationTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Location"-->
+            <!--android:id="@+id/locationTextView"-->
+            <!--android:drawableLeft="@drawable/ic_map_white_24dp"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/timeTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+    <!--</LinearLayout>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join this game!"
+        android:id="@+id/joinButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorIcons"
+        android:textStyle="bold" />
+
+</RelativeLayout>

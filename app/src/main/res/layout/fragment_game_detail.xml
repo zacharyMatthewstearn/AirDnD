@@ -1,44 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameDetailsActivity"
-    android:background="@color/colorDivider">
-
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_DM"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="false"
-        android:layout_marginEnd="205dp"
-        android:layout_alignParentStart="true"
-        android:textOn="I want to DM!"
-        android:textOff="I don&apos;t want to DM."
-        android:checked="false"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="205dp" />
-
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_Play"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_marginStart="205dp"
-        android:layout_alignParentEnd="true"
-        android:textOff="I don&apos;t want to play."
-        android:textOn="I want to play!"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="205dp"
-        android:checked="true" />
+    android:background="@color/colorDivider"
+    tools:context="com.epicodus.airdd.ui.GameDetailFragment">
 
     <LinearLayout
         android:orientation="vertical"
@@ -120,15 +85,4 @@
             android:layout_alignParentStart="true"/>
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Join this game!"
-        android:id="@+id/joinButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorIcons"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+</FrameLayout>

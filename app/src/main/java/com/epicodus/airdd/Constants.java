@@ -9,4 +9,7 @@ public class Constants {
     public static final String API_KEY = BuildConfig.API_KEY;
 
     public static final String PREFERENCES_UID_KEY = "uid";
+
+    public static final String EXTRA_KEY_POSITION = "position";
+    public static final String EXTRA_KEY_GAMES = "games";
 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -15,12 +13,10 @@ import android.view.MenuItem;
 import android.widget.ToggleButton;
 
 import com.epicodus.airdd.R;
-import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
 import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,7 @@ public class FindGameActivity extends AppCompatActivity {
 
     @Bind(R.id.toggleButton_DM) ToggleButton mDMToggleButton;
     @Bind(R.id.toggleButton_Play) ToggleButton mPlayToggleButton;
-    @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
+//    @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
 //    @Bind(R.id.recyclerViewAPI) RecyclerView mRecyclerViewAPI;
 
     private DatabaseReference mGameReference;
@@ -53,42 +49,14 @@ public class FindGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_game);
         ButterKnife.bind(this);
 
-        mGameReference = FirebaseDatabase.getInstance().getReference("games");
-        setUpFirebaseAdapter();
+//        mGameReference = FirebaseDatabase.getInstance().getReference("games");
+//        setUpFirebaseAdapter();
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
 
 //        getAPIGames();
     }
-
-    private void setUpFirebaseAdapter() {
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
-                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
-                        mGameReference) {
-
-            @Override
-            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
-                                              Game model, int position) {
-                viewHolder.bindGame(model);
-            }
-        };
-        mRecyclerViewFirebase.setHasFixedSize(true);
-        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mFirebaseAdapter.cleanup();
-    }
-
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,9 +87,31 @@ public class FindGameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFirebaseAdapter.cleanup();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+//    private void setUpFirebaseAdapter() {
+//        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
+//                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
+//                        mGameReference) {
+//
+//            @Override
+//            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
+//                                              Game model, int position) {
+//                viewHolder.bindGame(model);
+//            }
+//        };
+//        mRecyclerViewFirebase.setHasFixedSize(true);
+//        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
+//    }
 
     private void addToSharedPreferences(String searchTerm) {
         mEditor.putString("search_term", searchTerm).apply();

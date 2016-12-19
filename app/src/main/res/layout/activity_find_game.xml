@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.FindGameActivity">
 
     <ToggleButton
@@ -40,6 +39,14 @@
         android:layout_marginLeft="205dp"
         android:checked="true" />
 
+    <fragment
+        android:id="@+id/fragmentGameList"
+        android:name="com.epicodus.airdd.ui.GameListFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleButton_DM"
+        tools:layout="@layout/fragment_game_list" />
+
     <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -50,11 +57,11 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:orientation="vertical">-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewFirebase"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/toggleButton_DM"/>
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerViewFirebase"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_below="@+id/toggleButton_DM"/>-->
 
             <!--<android.support.v7.widget.RecyclerView-->
                 <!--android:id="@+id/recyclerViewAPI"-->

@@ -153,6 +153,14 @@ public class GameListFragment extends Fragment {
         mRecyclerViewFirebase.setHasFixedSize(true);
         mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                mFirebaseAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 //    private void addToSharedPreferences(String searchTerm) {

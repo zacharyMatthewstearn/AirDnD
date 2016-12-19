@@ -42,8 +42,8 @@
     <fragment
         android:id="@+id/fragmentGameList"
         android:name="com.epicodus.airdd.ui.GameListFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toggleButton_DM"
         tools:layout="@layout/fragment_game_list" />
 

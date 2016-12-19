@@ -1,5 +1,6 @@
 package com.epicodus.airdd.ui;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,9 @@ import android.view.ViewGroup;
 
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
-import com.epicodus.airdd.adapters.GameListAdapter;
+import com.epicodus.airdd.adapters.FirebaseGameListAdapter;
 import com.epicodus.airdd.models.Game;
+import com.epicodus.airdd.util.OnGameSelectedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,28 +33,29 @@ public class GameListFragment extends Fragment {
     private DatabaseReference mGameReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
 
-    private GameListAdapter mAdapter;
+    private FirebaseGameListAdapter mAdapter;
     public List<Game> mGames = new ArrayList<>();
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private String mSearchTerm;
 
+    private OnGameSelectedListener mOnGameSelectedListener;
+
     public GameListFragment() {
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        mGameReference = FirebaseDatabase.getInstance().getReference("games");
-//        setUpFirebaseAdapter();
-//
-////        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-////        mEditor = mSharedPreferences.edit();
-//
-////        setHasOptionsMenu(true);
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mOnGameSelectedListener = (OnGameSelectedListener) context;
+        }
+        catch(ClassCastException e) {
+            throw new ClassCastException(context.toString() + e.getMessage());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,11 +101,11 @@ public class GameListFragment extends Fragment {
 //        });
 //    }
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        mFirebaseAdapter.cleanup();
-//    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFirebaseAdapter.cleanup();
+    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
@@ -127,7 +130,7 @@ public class GameListFragment extends Fragment {
 //
 //                    @Override
 //                    public void run() {
-//                        mAdapter = new GameListAdapter(getActivity(), mGames);
+//                        mAdapter = new FirebaseGameListAdapter(getActivity(), mGames, mOnGameSelectedListener);
 //                        mRecyclerView.setAdapter(mAdapter);
 //                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 //                        mRecyclerView.setLayoutManager(layoutManager);

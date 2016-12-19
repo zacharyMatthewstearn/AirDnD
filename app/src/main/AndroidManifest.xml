@@ -19,7 +19,7 @@
                 android:value=".ui.MainActivity"/>
         </activity>
 
-        <activity android:name=".ui.GameDetailsActivity">
+        <activity android:name=".ui.GameDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.FindGameActivity"/>

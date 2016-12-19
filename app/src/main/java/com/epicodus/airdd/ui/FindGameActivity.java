@@ -1,6 +1,8 @@
 package com.epicodus.airdd.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
@@ -12,19 +14,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ToggleButton;
 
+import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
-import com.epicodus.airdd.adapters.GameListAdapter;
 import com.epicodus.airdd.models.Game;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DatabaseReference;
+import com.epicodus.airdd.util.OnGameSelectedListener;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class FindGameActivity extends AppCompatActivity {
+public class FindGameActivity extends AppCompatActivity implements OnGameSelectedListener{
     public static final String TAG = FindGameActivity.class.getSimpleName();
 
     @Bind(R.id.toggleButton_DM) ToggleButton mDMToggleButton;
@@ -32,15 +34,16 @@ public class FindGameActivity extends AppCompatActivity {
 //    @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
 //    @Bind(R.id.recyclerViewAPI) RecyclerView mRecyclerViewAPI;
 
-    private DatabaseReference mGameReference;
-    private FirebaseRecyclerAdapter mFirebaseAdapter;
+//    private DatabaseReference mGameReference;
+//    private FirebaseRecyclerAdapter mFirebaseAdapter;
 
-    private GameListAdapter mAdapter;
-    private List<Game> mGames = new ArrayList<>();
+//    private FirebaseGameListAdapter mAdapter;
+    private Integer mPosition;
+    private List<Game> mGames;
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
-    private String mSearchTerm;
+//    private String mSearchTerm;
 
 
     @Override
@@ -49,13 +52,35 @@ public class FindGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_game);
         ButterKnife.bind(this);
 
-//        mGameReference = FirebaseDatabase.getInstance().getReference("games");
-//        setUpFirebaseAdapter();
-
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
 
+        if(savedInstanceState != null) {
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mPosition = savedInstanceState.getInt(Constants.EXTRA_KEY_POSITION);
+                mGames = Parcels.unwrap(savedInstanceState.getParcelable(Constants.EXTRA_KEY_GAMES));
+                if(mPosition != null && mGames != null) {
+                    Intent intent = new Intent(this, GameDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY_POSITION, mPosition);
+                    intent.putExtra(Constants.EXTRA_KEY_GAMES, Parcels.wrap(mGames));
+                    startActivity(intent);
+                }
+            }
+        }
+
+//        mGameReference = FirebaseDatabase.getInstance().getReference("games");
+//        setUpFirebaseAdapter();
+
 //        getAPIGames();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(mPosition != null && mGames != null) {
+            outState.putInt(Constants.EXTRA_KEY_POSITION, mPosition);
+            outState.putParcelable(Constants.EXTRA_KEY_GAMES, Parcels.wrap(mGames));
+        }
     }
 
     @Override
@@ -86,15 +111,21 @@ public class FindGameActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mFirebaseAdapter.cleanup();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mFirebaseAdapter.cleanup();
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void OnGameSelected(Integer position, List<Game> games) {
+        mPosition = position;
+        mGames = games;
     }
 
 //    private void setUpFirebaseAdapter() {
@@ -138,7 +169,7 @@ public class FindGameActivity extends AppCompatActivity {
 //                FindGameActivity.this.runOnUiThread(new Runnable() {
 //                    @Override
 //                    public void run() {
-//                        GameListAdapter adapter = new GameListAdapter(FindGameActivity.this, mGames);
+//                        FirebaseGameListAdapter adapter = new FirebaseGameListAdapter(FindGameActivity.this, mGames);
 //                        mRecyclerViewAPI.setAdapter(adapter);
 //                    }
 //                });
@@ -148,7 +179,7 @@ public class FindGameActivity extends AppCompatActivity {
 //        FindGameActivity.this.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
-//                mAdapter = new GameListAdapter(getApplicationContext(), mGames);
+//                mAdapter = new FirebaseGameListAdapter(getApplicationContext(), mGames);
 //                mRecyclerViewAPI.setAdapter(mAdapter);
 //                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FindGameActivity.this);
 //

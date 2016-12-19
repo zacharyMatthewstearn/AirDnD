@@ -25,11 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GameDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String TAG = GameDetailsActivity.class.getSimpleName();
+public class GameDetailActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String TAG = GameDetailActivity.class.getSimpleName();
 
     @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
     @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
@@ -49,6 +51,8 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
     private ValueEventListener mGamesReferenceListener;
     private FirebaseAuth mAuth;
     private String mUid;
+    private List<Game> mGames;
+    private int position;
     private Game mGame;
 
     @Override
@@ -69,7 +73,9 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
         mUsersReference = FirebaseDatabase.getInstance().getReference().child("users");
         mGamesReference = FirebaseDatabase.getInstance().getReference().child("games");
 
-        mGame = Parcels.unwrap(getIntent().getParcelableExtra("thisGame"));
+        mGames = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_KEY_GAMES));
+        position = getIntent().getIntExtra(Constants.EXTRA_KEY_POSITION, 0);
+        mGame = mGames.get(position);
         if(mGame != null) {
             mTitleTextView.setText(mGame.getTitle());
             mTimeTextView.setText(mGame.getDateTime());
@@ -177,7 +183,7 @@ public class GameDetailsActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             default:
-                Log.d(TAG, "GameDetailsActivity onClick received bad argument for 'view'");
+                Log.d(TAG, "GameDetailActivity onClick received bad argument for 'view'");
         }
     }
 

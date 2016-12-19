@@ -3,11 +3,15 @@ package com.epicodus.airdd.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.epicodus.airdd.Constants;
+import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.ui.GameDetailActivity;
+import com.epicodus.airdd.ui.GameDetailFragment;
 import com.epicodus.airdd.util.OnGameSelectedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
@@ -86,24 +90,18 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
                 }
             }
         });
-
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = v.getContext();
-//                String thisGameName = ((TextView)((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(0)).getText().toString(); //TODO: Refactor
-//                Intent intent = new Intent(context, GameDetailActivity.class);
-//                intent.putExtra("thisGame", Parcels.wrap(Game.findByTitle(mGames, thisGameName)));
-//                context.startActivity(intent);
-//            }
-//        });
     }
 
     private void createDetailFragment(int position) {
-//        GameDetailFragment detailFragment = GameDetailFragment.newInstance(mGames, position);
-//        FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.gameDetailContainer, detailFragment);
-//        ft.commit();
+        GameDetailFragment detailFragment = GameDetailFragment.newInstance(mGames, position);
+        FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.gameDetailContainer, detailFragment);
+        ft.commit();
     }
 
+    @Override
+    public void cleanup() {
+        super.cleanup();
+        mRef.removeEventListener(mChildEventListener);
+    }
 }

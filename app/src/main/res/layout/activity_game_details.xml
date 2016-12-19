@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GameDetailActivity"
-    android:background="@color/colorDivider">
+    tools:context=".ui.GameDetailActivity">
 
     <ToggleButton
         android:layout_width="match_parent"
@@ -40,85 +39,94 @@
         android:layout_marginLeft="205dp"
         android:checked="true" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toggleButton_DM"
-        android:layout_above="@+id/joinButton">
+    <!--<fragment-->
+        <!--android:id="@+id/fragmentGameDetail"-->
+        <!--android:name="com.epicodus.airdd.ui.GameDetailFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/toggleButton_DM"-->
+        <!--android:layout_above="@+id/joinButton"-->
+        <!--tools:layout="@layout/fragment_game_detail" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/titleTextView"
-            android:textSize="40sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_below="@+id/toggleButton_DM"-->
+        <!--android:layout_above="@+id/joinButton">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time"
-            android:id="@+id/timeTextView"
-            android:textSize="30sp"
-            android:layout_below="@+id/titleTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Title"-->
+            <!--android:id="@+id/titleTextView"-->
+            <!--android:textSize="40sp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Players: "
-            android:id="@+id/playersTextView"
-            android:textSize="30sp"
-            android:layout_below="@+id/dmTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Time"-->
+            <!--android:id="@+id/timeTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/titleTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:id="@+id/descriptionTextView"
-            android:textSize="20sp"
-            android:layout_below="@+id/playersTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Players: "-->
+            <!--android:id="@+id/playersTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/dmTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DM: "
-            android:id="@+id/dmTextView"
-            android:textSize="30sp"
-            android:layout_below="@+id/hostTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Description"-->
+            <!--android:id="@+id/descriptionTextView"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_below="@+id/playersTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Host: "
-            android:id="@+id/hostTextView"
-            android:textSize="30sp"
-            android:layout_below="@+id/locationTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="DM: "-->
+            <!--android:id="@+id/dmTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/hostTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:id="@+id/locationTextView"
-            android:drawableLeft="@drawable/ic_map_white_24dp"
-            android:textSize="30sp"
-            android:layout_below="@+id/timeTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Host: "-->
+            <!--android:id="@+id/hostTextView"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/locationTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Location"-->
+            <!--android:id="@+id/locationTextView"-->
+            <!--android:drawableLeft="@drawable/ic_map_white_24dp"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_below="@+id/timeTextView"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"/>-->
+    <!--</LinearLayout>-->
 
     <Button
         android:layout_width="match_parent"

@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.epicodus.airdd.R;
-import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
 import com.epicodus.airdd.adapters.FirebaseGameListAdapter;
+import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.util.OnGameSelectedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -33,7 +33,7 @@ public class GameListFragment extends Fragment {
     private DatabaseReference mGameReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
 
-    private FirebaseGameListAdapter mAdapter;
+    private FirebaseGameListAdapter mFirebaseGameListAdapter;
     public List<Game> mGames = new ArrayList<>();
 
     private SharedPreferences mSharedPreferences;
@@ -104,7 +104,9 @@ public class GameListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mFirebaseAdapter.cleanup();
+        if(mFirebaseAdapter != null) {
+            mFirebaseAdapter.cleanup();
+        }
     }
 
 //    @Override
@@ -130,8 +132,8 @@ public class GameListFragment extends Fragment {
 //
 //                    @Override
 //                    public void run() {
-//                        mAdapter = new FirebaseGameListAdapter(getActivity(), mGames, mOnGameSelectedListener);
-//                        mRecyclerView.setAdapter(mAdapter);
+//                        mFirebaseGameListAdapter = new FirebaseGameListAdapter(getActivity(), mGames, mOnGameSelectedListener);
+//                        mRecyclerView.setAdapter(mFirebaseGameListAdapter);
 //                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 //                        mRecyclerView.setLayoutManager(layoutManager);
 //                        mRecyclerView.setHasFixedSize(true);
@@ -144,26 +146,33 @@ public class GameListFragment extends Fragment {
 
 
     private void setUpFirebaseAdapter() {
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
-                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, mGameReference) {
+        mFirebaseGameListAdapter = new FirebaseGameListAdapter(Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, mGameReference, mOnGameSelectedListener, getActivity());
 
-            @Override
-            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
-                                              Game model, int position) {
-                viewHolder.bindGame(model);
-            }
-        };
-        mRecyclerViewFirebase.setHasFixedSize(true);
-        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
 
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+//        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
+//                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, mGameReference) {
+//
+//            @Override
+//            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
+//                                              Game model, int position) {
+//                viewHolder.bindGame(model);
+//            }
+//        };
+//        mRecyclerViewFirebase.setAdapter(mFirebaseAdapter);
+
+        mFirebaseGameListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                mFirebaseAdapter.notifyDataSetChanged();
+                mFirebaseGameListAdapter.notifyDataSetChanged();
             }
         });
+
+        mRecyclerViewFirebase.setHasFixedSize(true);
+        mRecyclerViewFirebase.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerViewFirebase.setAdapter(mFirebaseGameListAdapter);
+
+
     }
 
 //    private void addToSharedPreferences(String searchTerm) {

@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MotionEventCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -36,9 +37,10 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
     private List<Game> mGames = new ArrayList<>();
     private int mOrientation;
 
-    public FirebaseGameListAdapter(Class<Game> modelClass, int modelLayout, Class<FirebaseGameViewHolder> viewHolderClass, Query ref, Context context) {
+    public FirebaseGameListAdapter(Class<Game> modelClass, int modelLayout, Class<FirebaseGameViewHolder> viewHolderClass, Query ref, OnStartDragListener onStartDragListener, Context context) {
         super(modelClass, modelLayout, viewHolderClass, ref);
         mRef = ref.getRef();
+        mOnStartDragListener = onStartDragListener;
         mContext = context;
 
 
@@ -82,6 +84,7 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
         viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+//                Log.v("ENCOURAGING VIOLENCE", viewHolder.itemView.toString());
                 if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                     mOnStartDragListener.onStartDrag(viewHolder);
                 }
@@ -119,14 +122,15 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
         mRef.removeEventListener(mChildEventListener);
     }
 
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        notifyItemMoved(fromPosition, toPosition);
-        return false;
-    }
+//    @Override
+//    public boolean onItemMove(int fromPosition, int toPosition) {
+//        notifyItemMoved(fromPosition, toPosition);
+//        return false;
+//    }
 
     @Override
     public void onItemDismiss(int position) {
+        Log.v("FirebaseGameListAdapter", "DISMISSED!!!!!!!");
         mGames.remove(position);
         getRef(position).removeValue();
     }

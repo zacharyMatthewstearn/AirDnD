@@ -17,7 +17,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder {
 //    private List<Game> mGames;
 
 
-    public FirebaseGameViewHolder(View itemView){
+    public FirebaseGameViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
         mContext = itemView.getContext();

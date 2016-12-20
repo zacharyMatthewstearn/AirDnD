@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,15 @@ import com.epicodus.airdd.R;
 import com.epicodus.airdd.adapters.FirebaseGameListAdapter;
 import com.epicodus.airdd.adapters.FirebaseGameViewHolder;
 import com.epicodus.airdd.models.Game;
+import com.epicodus.airdd.util.OnStartDragListener;
+import com.epicodus.airdd.util.SimpleItemTouchHelperCallback;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GameListFragment extends Fragment {
+public class GameListFragment extends Fragment implements OnStartDragListener {
 //    public static final String TAG = GameListFragment.class.getSimpleName();
 
     @Bind(R.id.recyclerViewFirebase) RecyclerView mRecyclerViewFirebase;
@@ -26,6 +29,7 @@ public class GameListFragment extends Fragment {
 //    private DatabaseReference mGameReference;
 
     private FirebaseGameListAdapter mFirebaseAdapter;
+    private ItemTouchHelper mItemTouchHelper;
 //    public List<Game> mGames = new ArrayList<>();
 
 //    private SharedPreferences mSharedPreferences;
@@ -139,7 +143,7 @@ public class GameListFragment extends Fragment {
 
         Query query = FirebaseDatabase.getInstance().getReference("games");
 
-        mFirebaseAdapter = new FirebaseGameListAdapter(Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, query, getActivity());
+        mFirebaseAdapter = new FirebaseGameListAdapter(Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class, query, this, getActivity());
 
 
 //        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
@@ -162,10 +166,13 @@ public class GameListFragment extends Fragment {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 mFirebaseAdapter.notifyDataSetChanged();
-            }
+
+              }
         });
 
-
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mRecyclerViewFirebase);
     }
 
 //    private void addToSharedPreferences(String searchTerm) {
@@ -180,4 +187,8 @@ public class GameListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
+    }
 }

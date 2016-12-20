@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
@@ -81,13 +80,20 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
             createDetailFragment(0);
         }
 
-        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
+//        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+//                    mOnStartDragListener.onStartDrag(viewHolder);
+//                }
+//                return false;
+//            }
+//        });
+
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-//                Log.v("ENCOURAGING VIOLENCE", viewHolder.itemView.toString());
-                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                    mOnStartDragListener.onStartDrag(viewHolder);
-                }
+            public boolean onLongClick(View v) {
+                Toast.makeText(viewHolder.itemView.getContext(), "You have joined this game in your chosen role!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

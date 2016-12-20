@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MotionEventCompat;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.epicodus.airdd.Constants;
@@ -12,6 +14,8 @@ import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.ui.GameDetailActivity;
 import com.epicodus.airdd.ui.GameDetailFragment;
+import com.epicodus.airdd.util.ItemTouchHelperAdapter;
+import com.epicodus.airdd.util.OnStartDragListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,8 +28,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder> {
+public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder> implements ItemTouchHelperAdapter{
     private DatabaseReference mRef;
+    private OnStartDragListener mOnStartDragListener;
     private ChildEventListener mChildEventListener;
     private Context mContext;
     private List<Game> mGames = new ArrayList<>();
@@ -74,6 +79,16 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
             createDetailFragment(0);
         }
 
+        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                    mOnStartDragListener.onStartDrag(viewHolder);
+                }
+                return false;
+            }
+        });
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,5 +117,17 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
     public void cleanup() {
         super.cleanup();
         mRef.removeEventListener(mChildEventListener);
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        notifyItemMoved(fromPosition, toPosition);
+        return false;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        mGames.remove(position);
+        getRef(position).removeValue();
     }
 }

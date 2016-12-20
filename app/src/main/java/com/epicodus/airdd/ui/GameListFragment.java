@@ -162,7 +162,8 @@ public class GameListFragment extends Fragment {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 mFirebaseAdapter.notifyDataSetChanged();
-            }
+
+              }
         });
 
 

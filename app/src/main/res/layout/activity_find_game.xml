@@ -47,28 +47,4 @@
         android:layout_below="@+id/toggleButton_DM"
         tools:layout="@layout/fragment_game_list" />
 
-    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@+id/toggleButton_DM"-->
-        <!--android:fillViewport="true">-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/recyclerViewFirebase"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_below="@+id/toggleButton_DM"/>-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/recyclerViewAPI"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" />-->
-
-        <!--</LinearLayout>-->
-    <!--</ScrollView>-->
-
 </RelativeLayout>

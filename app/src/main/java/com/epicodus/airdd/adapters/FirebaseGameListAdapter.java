@@ -80,16 +80,6 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
             createDetailFragment(0);
         }
 
-//        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-//                    mOnStartDragListener.onStartDrag(viewHolder);
-//                }
-//                return false;
-//            }
-//        });
-
         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -127,12 +117,6 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
         super.cleanup();
         mRef.removeEventListener(mChildEventListener);
     }
-
-//    @Override
-//    public boolean onItemMove(int fromPosition, int toPosition) {
-//        notifyItemMoved(fromPosition, toPosition);
-//        return false;
-//    }
 
     @Override
     public void onItemDismiss(int position) {

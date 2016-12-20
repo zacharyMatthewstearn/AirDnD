@@ -30,8 +30,6 @@ import butterknife.ButterKnife;
 
 
 public class GameDetailFragment extends Fragment implements View.OnClickListener {
-
-
     @Bind(R.id.titleTextView) TextView mTitleTextView;
     @Bind(R.id.timeTextView) TextView mTimeTextView;
     @Bind(R.id.locationTextView) TextView mLocationTextView;
@@ -40,13 +38,8 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     @Bind(R.id.playersTextView) TextView mPlayersTextView;
     @Bind(R.id.descriptionTextView) TextView mDescriptionTextView;
 
-//    private SharedPreferences mSharedPreferences;
     private DatabaseReference mUsersReference;
-//    private DatabaseReference mGamesReference;
     private ValueEventListener mUsersReferenceListener;
-//    private ValueEventListener mGamesReferenceListener;
-//    private FirebaseAuth mAuth;
-//    private String mUid;
     private Game mGame;
     private List<Game> mGames;
     private int mPosition;
@@ -77,13 +70,6 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
-
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
-
-//        mAuth = FirebaseAuth.getInstance();
-//        mUsersReference = FirebaseDatabase.getInstance().getReference().child("users");
-//        mGamesReference = FirebaseDatabase.getInstance().getReference().child("games");
 
         if(mGame != null) {
             mTitleTextView.setText(mGame.getTitle());

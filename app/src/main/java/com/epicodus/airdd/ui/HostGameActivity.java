@@ -1,10 +1,7 @@
 package com.epicodus.airdd.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,22 +9,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.epicodus.airdd.Constants;
 import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
-import com.epicodus.airdd.models.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HostGameActivity extends AppCompatActivity implements View.OnClickListener {
-
-    public static final String TAG = HostGameActivity.class.getSimpleName();
+public class HostGameActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
     @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
@@ -38,39 +28,29 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
     @Bind(R.id.button_postGame) Button mButtonPostGame;
     @Bind(R.id.button_cancel) Button mButtonCancel;
 
-    private DatabaseReference mNewGameReference;
-    private FirebaseAuth mAuth;
-    private SharedPreferences mSharedPreferences;
-    private String mUid;
+    private String mTitle = null;
+    private String mDate = null;
+    private String mAddress = null;
+    private String mDescription = null;
+    private boolean mIWantToDM = false;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_host_game);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle("Host a Game");
 
         mToggleButtonDM.setOnClickListener(this);
         mToggleButtonPlay.setOnClickListener(this);
         mButtonPostGame.setOnClickListener(this);
         mButtonCancel.setOnClickListener(this);
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUid = mSharedPreferences.getString(Constants.PREFERENCES_UID_KEY, null);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        mNewGameReference = FirebaseDatabase
-                .getInstance()
-                .getReference("games");
     }
 
     @Override
-    public void onClick(View view) {
-        Intent intent;
-        User temp = new User("Guest", "guest@email.com", "password");
-        Game newGame;
-        switch(view.getId()) {
+    public void onClick(View _view) {
+        switch(_view.getId()) {
             case R.id.toggleButton_DM:
                 mToggleButtonPlay.setChecked(!mToggleButtonPlay.isChecked());
                 break;
@@ -78,49 +58,62 @@ public class HostGameActivity extends AppCompatActivity implements View.OnClickL
                 mToggleButtonDM.setChecked(!mToggleButtonDM.isChecked());
                 break;
             case R.id.button_postGame:
-                if(mEditTextTitle.getText().toString().length() > 0 &&
-                   mEditTextDate.getText().toString().length() > 0 &&
-                   mEditTextDescription.getText().toString().length() > 0) {
+                mTitle = mEditTextTitle.getText().toString().trim();
+                mDate = mEditTextDate.getText().toString().trim();
+                mAddress = mEditTextAddress.getText().toString().trim();
+                mDescription = mEditTextDescription.getText().toString().trim();
+                mIWantToDM = mToggleButtonDM.isChecked();
 
-                    newGame = new Game(mEditTextTitle.getText().toString(), mEditTextDescription.getText().toString(), mEditTextAddress.getText().toString(), mEditTextDate.getText().toString(), mToggleButtonDM.isChecked()); // TODO: ADD A THING HERE
+                if(!IsValidTitle(mTitle) || !IsValidDate(mDate) || !IsValidAddress(mAddress) || !IsValidDescription(mDescription))
+                    return;
 
+                Game newGame = new Game(mTitle, mDate, mAddress, mDescription, mUid, mIWantToDM);
+                mDBRefGames.push().setValue(newGame);
 
+                mIntent = new Intent(mContext, FindGameActivity.class);
+                mIntent.putExtra("mNewGame", Parcels.wrap(newGame));
+                startActivity(mIntent);
 
-
-
-                    if(mAuth.getCurrentUser() != null) {
-                        newGame.setHostId(mAuth.getCurrentUser().getUid());
-                        saveGameToFirebase(newGame);
-                    }
-                    else {
-                        Log.w(TAG, "No current user");
-                    }
-
-
-
-
-
-
-                    intent = new Intent(HostGameActivity.this, FindGameActivity.class);
-                    intent.putExtra("mNewGame", Parcels.wrap(newGame));
-                    startActivity(intent);
-
-                    Toast.makeText(this, "Your game has been posted!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(HostGameActivity.this, "All fields are required to post a game.", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(this, "Your game has been posted!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_cancel:
-                intent = new Intent(HostGameActivity.this, MainActivity.class);
-                startActivity(intent);
+                mIntent = new Intent(mContext, MainActivity.class);
+                startActivity(mIntent);
                 break;
             default:
-                Log.d(TAG, "HostGameActivity onClick received bad argument for 'view'");
+                Log.d(TAG, "HostGameActivity onClick received bad argument for 'view' : " + _view.toString());
         }
     }
 
-    private void saveGameToFirebase(Game newGame) {
-        mNewGameReference.push().setValue(newGame);
+    private boolean IsValidTitle(String _title) {
+        if (_title.equals("")) {
+            mEditTextTitle.setError("Please enter a title");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean IsValidDate(String _date) {
+        if (_date.equals("")) {
+            mEditTextDate.setError("Please enter a date");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean IsValidAddress(String _address) {
+        if (_address.equals("")) {
+            mEditTextDate.setError("Please enter an address");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean IsValidDescription(String _description) {
+        if (_description.equals("")) {
+            mEditTextDate.setError("Please enter a description");
+            return false;
+        }
+        return true;
     }
 }

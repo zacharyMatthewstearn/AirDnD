@@ -19,15 +19,18 @@ public class Game {
     String description = "";
     String location = "";
     String dateTime = "";
-    boolean hostDm = true;
 
     // CONSTRUCTORS
-    public Game(String title, String description, String location, String dateTime, boolean hostDm) {
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.dateTime = dateTime;
-        this.hostDm = hostDm;
+    public Game(String _title, String _dateTime, String _location, String _description, String _hostId, boolean _hostDm) {
+        this.title = _title;
+        this.dateTime = _dateTime;
+        this.location = _location;
+        this.description = _description;
+        this.hostId = _hostId;
+        if(_hostDm)
+            this.dmId = _hostId;
+        else
+            playerIds.add(_hostId);
     }
     public Game() {    }
 
@@ -78,13 +81,7 @@ public class Game {
 
     public void setDmId(String dmId) { this.dmId = dmId; }
     public void setPlayerIds(List<String> playerIds) { this.playerIds = playerIds; }
-    public void setHostId(String hostId) {
-        this.hostId = hostId;
-        if(this.hostDm)
-            setDmId(hostId);
-        else
-            addPlayerId(hostId);
-    }
+    public void setHostId(String _hostId) { this.hostId = _hostId; }
 
     public void addPlayerId(String playerId) { this.playerIds.add(playerId); }
 }

@@ -30,33 +30,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle("Sign In");
 
-        createProgressDialog("Authenticating with Firebase...");
+        CreateProgressDialog("Authenticating with Firebase...");
 
         mRegisterTextView.setOnClickListener(this);
         mPasswordLoginButton.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View _view) {
+        switch (_view.getId()) {
             case R.id.registerTextView:
                 mIntent = new Intent(LoginActivity.this, CreateAccountActivity.class);
                 startActivity(mIntent);
                 break;
             case R.id.passwordLoginButton:
-                loginWithPassword();
+                LogIn();
                 break;
             default:
-                Log.d(TAG, "onClick received bad argument for 'view' : " + view.toString());
+                Log.d(TAG, "onClick received bad argument for '_view' : " + _view.toString());
         }
     }
 
-    private void loginWithPassword() {
+    private void LogIn() {
         mEmail = mEmailEditText.getText().toString().trim();
         mPassword = mPasswordEditText.getText().toString().trim();
 

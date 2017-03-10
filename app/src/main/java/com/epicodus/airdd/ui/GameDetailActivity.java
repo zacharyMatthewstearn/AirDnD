@@ -2,7 +2,6 @@ package com.epicodus.airdd.ui;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ToggleButton;
 
@@ -18,7 +17,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GameDetailActivity extends AppCompatActivity {
+public class GameDetailActivity extends BaseActivity {
+
     @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
     @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
     @Bind(R.id.viewPager) ViewPager mViewPager;
@@ -28,8 +28,8 @@ public class GameDetailActivity extends AppCompatActivity {
     private List<Game> mGames;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_game_detail);
         ButterKnife.bind(this);
 

@@ -1,6 +1,7 @@
 package com.epicodus.airdd.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,32 +39,49 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     @Bind(R.id.playersTextView) TextView mPlayersTextView;
     @Bind(R.id.descriptionTextView) TextView mDescriptionTextView;
 
-    private DatabaseReference mUsersReference;
-    private ValueEventListener mUsersReferenceListener;
-    private Game mGame;
+    private DatabaseReference mDBRefUsers;
+    private ValueEventListener mValueEventListener_Users;
     private List<Game> mGames;
     private int mPosition;
+    private Game mGame;
+    private Intent mIntentFrom;
+    private Intent mIntentTo;
+    private Context mContext;
 
 
-    public static GameDetailFragment newInstance(List<Game> games, Integer position) {
+    public static GameDetailFragment newInstance(List<Game> _games, Integer _position) {
         GameDetailFragment gameDetailFragment = new GameDetailFragment();
-        Bundle args = new Bundle();
 
-        args.putParcelable(Constants.EXTRA_KEY_GAMES, Parcels.wrap(games));
-        args.putInt(Constants.EXTRA_KEY_POSITION, position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.EXTRA_KEY_GAMES, Parcels.wrap(_games));
+        bundle.putInt(Constants.EXTRA_KEY_POSITION, _position);
+        gameDetailFragment.setArguments(bundle);
 
-        gameDetailFragment.setArguments(args);
         return gameDetailFragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mGames = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_KEY_GAMES));
-        mPosition = getArguments().getInt(Constants.EXTRA_KEY_POSITION);
+    public void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
+
+        mContext = getActivity();
+
+        mIntentFrom = getActivity().getIntent();
+
+        mGames = Parcels.unwrap(mIntentFrom.getParcelableExtra(Constants.EXTRA_KEY_GAMES));
+        mPosition = mIntentFrom.getIntExtra(Constants.EXTRA_KEY_POSITION, 0);
         mGame = mGames.get(mPosition);
 
-        mUsersReference = FirebaseDatabase.getInstance().getReference().child("users");
+//        Log.d(String.valueOf(mContext), "_position == " + mPosition);
+//        if(mGames.isEmpty())
+//            Log.d(String.valueOf(mContext), "mGames.isEmpty == true ");
+//        else {
+//            Log.d(String.valueOf(mContext), "mGames.size() == " + mGames.size());
+//            if(mPosition >= 0 && mPosition < mGames.size())
+//                Log.d(String.valueOf(mContext), "mGames.get(_position).getTitle() == " + mGames.get(mPosition).getTitle());
+//        }
+
+        mDBRefUsers = FirebaseDatabase.getInstance().getReference().child("users");
     }
 
     @Override
@@ -81,7 +99,7 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
             Toast.makeText(getActivity(), "ERROR: failed to retrieve data", Toast.LENGTH_SHORT).show();
         }
 
-        mUsersReferenceListener = mUsersReference.addValueEventListener(new ValueEventListener() {
+        mValueEventListener_Users = mDBRefUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String uid;
@@ -115,14 +133,14 @@ public class GameDetailFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
+    public void onClick(View _view) {
+        switch(_view.getId()) {
             case R.id.locationTextView:
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + mGame.getLocation()));
-                startActivity(mapIntent);
+                mIntentTo = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + mGame.getLocation()));
+                startActivity(mIntentTo);
                 break;
             default:
-                Log.d("GameDetailFragment", "onClick received bad argument for 'view'");
+                Log.d("GameDetailFragment", "onClick received bad argument for 'view' : " + _view.toString());
         }
     }
 

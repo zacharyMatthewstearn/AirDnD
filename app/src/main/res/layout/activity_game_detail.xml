@@ -5,46 +5,43 @@
     android:layout_height="match_parent"
     tools:context=".ui.GameDetailActivity">
 
-    <ToggleButton
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_DM"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="false"
-        android:layout_marginEnd="205dp"
-        android:layout_alignParentStart="true"
-        android:textOn="I want to DM!"
-        android:textOff="I don&apos;t want to DM."
-        android:checked="false"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="205dp" />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:id="@+id/linearLayout_togglePlayOrDM"
+        android:layout_alignParentTop="true">
 
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_Play"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_marginStart="205dp"
-        android:layout_alignParentEnd="true"
-        android:textOff="I don&apos;t want to play."
-        android:textOn="I want to play!"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="205dp"
-        android:checked="true" />
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton_DM"
+            android:textOn="I want to DM!"
+            android:textOff="I don&apos;t want to DM."
+            android:checked="false"
+            android:background="@color/colorPrimaryLight" />
+
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton_Play"
+            android:textOff="I don&apos;t want to play."
+            android:textOn="I want to play!"
+            android:background="@color/colorPrimaryLight"
+            android:checked="true" />
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toggleButton_DM"
-        android:layout_above="@+id/joinButton">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout_togglePlayOrDM" >
 
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pagerHeader"
@@ -55,6 +52,16 @@
             android:paddingTop="4dp" />
 
     </android.support.v4.view.ViewPager>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gameDetailContainer"
+        android:layout_below="@+id/viewPager"
+        android:layout_above="@+id/joinButton"
+        android:name="com.epicodus.airdd.ui.GameDetailFragment"
+        tools:layout="@layout/fragment_game_detail">
+    </fragment>
 
     <Button
         android:layout_width="match_parent"

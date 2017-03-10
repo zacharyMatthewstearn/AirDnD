@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.FindGameActivity">
 
-    <ToggleButton
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_DM"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="false"
-        android:layout_marginEnd="205dp"
-        android:layout_alignParentStart="true"
-        android:textOn="I want to DM!"
-        android:textOff="I don&apos;t want to DM."
-        android:checked="true"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="205dp" />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:id="@+id/linearLayout_togglePlayOrDM">
 
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New ToggleButton"
-        android:id="@+id/toggleButton_Play"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_marginStart="205dp"
-        android:layout_alignParentEnd="true"
-        android:textOff="I don&apos;t want to play."
-        android:textOn="I want to play!"
-        android:background="@color/colorPrimaryLight"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="205dp"
-        android:checked="true" />
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton_DM"
+            android:textOn="I want to DM!"
+            android:textOff="I don&apos;t want to DM."
+            android:checked="true"
+            android:background="@color/colorPrimaryLight" />
 
-    <fragment
-        android:id="@+id/fragmentGameList"
-        android:name="com.epicodus.airdd.ui.GameListFragment"
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton_Play"
+            android:textOff="I don&apos;t want to play."
+            android:textOn="I want to play!"
+            android:background="@color/colorPrimaryLight"
+            android:checked="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toggleButton_DM"
-        tools:layout="@layout/fragment_game_list" />
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:id="@+id/linearLayout_emptyGamesListMessage"
+        android:visibility="gone">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="There are currently no games listed with the availability that you desire."
+            android:gravity="center"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/firebaseRecyclerView_Games" />
+
+</LinearLayout>

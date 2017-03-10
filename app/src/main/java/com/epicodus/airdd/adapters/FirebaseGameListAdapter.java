@@ -2,18 +2,12 @@ package com.epicodus.airdd.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.epicodus.airdd.Constants;
-import com.epicodus.airdd.R;
 import com.epicodus.airdd.models.Game;
 import com.epicodus.airdd.ui.GameDetailActivity;
-import com.epicodus.airdd.ui.GameDetailFragment;
 import com.epicodus.airdd.util.ItemTouchHelperAdapter;
 import com.epicodus.airdd.util.OnStartDragListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -28,22 +22,24 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder> implements ItemTouchHelperAdapter{
-    private DatabaseReference mRef;
-    private OnStartDragListener mOnStartDragListener;
-    private ChildEventListener mChildEventListener;
+public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder> implements ItemTouchHelperAdapter {
+
     private Context mContext;
+    private DatabaseReference mDBRef_Games;
+    private ChildEventListener mChildEventListener;
+    private OnStartDragListener mOnStartDragListener;
     private List<Game> mGames = new ArrayList<>();
-    private int mOrientation;
-
-    public FirebaseGameListAdapter(Class<Game> modelClass, int modelLayout, Class<FirebaseGameViewHolder> viewHolderClass, Query ref, OnStartDragListener onStartDragListener, Context context) {
-        super(modelClass, modelLayout, viewHolderClass, ref);
-        mRef = ref.getRef();
-        mOnStartDragListener = onStartDragListener;
-        mContext = context;
+    private Intent mIntent;
 
 
-        mChildEventListener = mRef.addChildEventListener(new ChildEventListener() {
+    public FirebaseGameListAdapter(Class<Game> _modelClass, int _modelLayout, Class<FirebaseGameViewHolder> _viewHolderClass, Query _ref, OnStartDragListener _onStartDragListener, Context _context) {
+        super(_modelClass, _modelLayout, _viewHolderClass, _ref);
+        mDBRef_Games = _ref.getRef();
+        mOnStartDragListener = _onStartDragListener;
+        mContext = _context;
+
+
+        mChildEventListener = mDBRef_Games.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mGames.add(dataSnapshot.getValue(Game.class));
@@ -56,7 +52,7 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                mGames.remove(dataSnapshot.getValue(Game.class));
             }
 
             @Override
@@ -72,56 +68,43 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
     }
 
     @Override
-    protected void populateViewHolder(final FirebaseGameViewHolder viewHolder, Game model, int position) {
-        viewHolder.bindGame(model);
+    protected void populateViewHolder(final FirebaseGameViewHolder _viewHolder, Game _model, final int _position) {
+        _viewHolder.bindGame(_model);
 
-        mOrientation = viewHolder.itemView.getResources().getConfiguration().orientation;
-        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            createDetailFragment(0);
-        }
-
-        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        _viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(viewHolder.itemView.getContext(), "You have joined this game in your chosen role!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(_viewHolder.itemView.getContext(), "You have joined this game in your chosen role!", Toast.LENGTH_SHORT).show();
+
+
+                //TODO: ACTUALLY SIGN UP FOR THE DAMNED GAME!!!!!!!!!!!!!!
+
+
                 return false;
             }
         });
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        _viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int itemPosition = viewHolder.getAdapterPosition();
-                if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    createDetailFragment(itemPosition);
-                }
-                else {
-                    Intent intent = new Intent(mContext, GameDetailActivity.class);
-                    intent.putExtra(Constants.EXTRA_KEY_POSITION, itemPosition);
-                    intent.putExtra(Constants.EXTRA_KEY_GAMES, Parcels.wrap(mGames));
-                    mContext.startActivity(intent);
-                }
+
+                mIntent = new Intent(mContext, GameDetailActivity.class);
+                mIntent.putExtra(Constants.EXTRA_KEY_POSITION, _position);
+                mIntent.putExtra(Constants.EXTRA_KEY_GAMES, Parcels.wrap(mGames));
+                mContext.startActivity(mIntent);
             }
         });
-    }
-
-    private void createDetailFragment(int position) {
-        GameDetailFragment detailFragment = GameDetailFragment.newInstance(mGames, position);
-        FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.gameDetailContainer, detailFragment);
-        ft.commit();
     }
 
     @Override
     public void cleanup() {
         super.cleanup();
-        mRef.removeEventListener(mChildEventListener);
+        mDBRef_Games.removeEventListener(mChildEventListener);
     }
 
     @Override
-    public void onItemDismiss(int position) {
-        Log.v("FirebaseGameListAdapter", "DISMISSED!!!!!!!");
-        mGames.remove(position);
-        getRef(position).removeValue();
+    public void onItemDismiss(int _position) {
+        mGames.remove(_position);
+        getRef(_position).removeValue();
     }
 }

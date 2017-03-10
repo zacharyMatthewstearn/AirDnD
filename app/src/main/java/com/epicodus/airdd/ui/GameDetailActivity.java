@@ -2,7 +2,10 @@ package com.epicodus.airdd.ui;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.epicodus.airdd.Constants;
@@ -17,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GameDetailActivity extends BaseActivity {
+public class GameDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.toggleButton_DM) ToggleButton mToggleButtonDM;
     @Bind(R.id.toggleButton_Play) ToggleButton mToggleButtonPlay;
@@ -39,5 +42,27 @@ public class GameDetailActivity extends BaseActivity {
         adapterViewPager = new GamePagerAdapter(getSupportFragmentManager(), mGames);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
+
+        mJoinButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View _view) {
+
+        switch(_view.getId()) {
+            case R.id.joinButton:
+
+                Toast.makeText(_view.getContext(), "You have joined this game in your chosen role!", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+//                mIntent = new Intent(mContext, FindGameActivity.class);
+//                startActivity(mIntent);
+                break;
+            default:
+                Log.d(TAG, "GameDetailsActivity onClick received bad argument for 'view' : " + _view.toString());
+        }
     }
 }

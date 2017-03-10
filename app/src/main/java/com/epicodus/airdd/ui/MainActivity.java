@@ -36,15 +36,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View _view) {
-        Intent intent;
         switch(_view.getId()) {
             case R.id.button_findGame:
-                intent = new Intent(MainActivity.this, FindGameActivity.class);
-                startActivity(intent);
+                mIntent = new Intent(mContext, FindGameActivity.class);
+                startActivity(mIntent);
                 break;
             case R.id.button_hostGame:
-                intent = new Intent(MainActivity.this, HostGameActivity.class);
-                startActivity(intent);
+                mIntent = new Intent(mContext, HostGameActivity.class);
+                startActivity(mIntent);
                 break;
             default:
                 Log.d(TAG, "MainActivity onClick received bad argument for 'view' : " + _view.toString());

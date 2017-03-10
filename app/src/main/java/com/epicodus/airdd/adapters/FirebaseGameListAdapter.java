@@ -74,10 +74,16 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
         _viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
                 Toast.makeText(_viewHolder.itemView.getContext(), "You have joined this game in your chosen role!", Toast.LENGTH_SHORT).show();
 
 
                 //TODO: ACTUALLY SIGN UP FOR THE DAMNED GAME!!!!!!!!!!!!!!
+
+
+                // Throw a dialog to confirm/select desired role
+
+
 
 
                 return false;
@@ -105,6 +111,6 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<Game, Fireb
     @Override
     public void onItemDismiss(int _position) {
         mGames.remove(_position);
-        getRef(_position).removeValue();
+//        getRef(_position).removeValue(); // actually removes from DB
     }
 }
